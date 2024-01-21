@@ -23,4 +23,28 @@ struct GameResult: Decodable {
         case slug, name, released, rating, id
         case backgroundImage = "background_image"
     }
+    
+    var _slug: String {
+        slug ?? "N/A"
+    }
+    
+    var _name: String {
+        name ?? "N/A"
+    }
+    
+    var _released: String {
+        released ?? "N/A"
+    }
+    
+    var _backgroundImage: String {
+        backgroundImage ?? "N/A"
+    }
+    
+    var _rating: Double {
+        rating ?? 0.0
+    }
+    
+    var _id: Int {
+        id ?? Int.min
+    }
 }
