@@ -14,7 +14,4 @@ class HomeViewController: UIViewController {
 
         view.backgroundColor = .systemGray3
     }
-    
-
-
 }

@@ -12,6 +12,7 @@
 		B609EA002B5D25F500EDFA92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B609E9FF2B5D25F500EDFA92 /* Assets.xcassets */; };
 		B609EA032B5D25F500EDFA92 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B609EA012B5D25F500EDFA92 /* LaunchScreen.storyboard */; };
 		B609EA0D2B5D2C2300EDFA92 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA0C2B5D2C2300EDFA92 /* HomeViewController.swift */; };
+		B609EA102B5D32EA00EDFA92 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA0F2B5D32EA00EDFA92 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		B609EA022B5D25F500EDFA92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B609EA042B5D25F500EDFA92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B609EA0C2B5D2C2300EDFA92 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		B609EA0F2B5D32EA00EDFA92 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = "Video-Games-App-MVVM-ProgrammaticUI/NetworkManager.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +56,39 @@
 		B609E9F52B5D25F300EDFA92 /* Video-Games-App-MVVM-ProgrammaticUI */ = {
 			isa = PBXGroup;
 			children = (
+				B609EA0E2B5D32D200EDFA92 /* Utilities */,
+				B609EA112B5D348B00EDFA92 /* Core */,
 				B609E9F62B5D25F300EDFA92 /* AppDelegate.swift */,
 				B609E9F82B5D25F300EDFA92 /* SceneDelegate.swift */,
-				B609EA0C2B5D2C2300EDFA92 /* HomeViewController.swift */,
 				B609E9FF2B5D25F500EDFA92 /* Assets.xcassets */,
 				B609EA012B5D25F500EDFA92 /* LaunchScreen.storyboard */,
 				B609EA042B5D25F500EDFA92 /* Info.plist */,
 			);
 			path = "Video-Games-App-MVVM-ProgrammaticUI";
+			sourceTree = "<group>";
+		};
+		B609EA0E2B5D32D200EDFA92 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B609EA0F2B5D32EA00EDFA92 /* NetworkManager.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		B609EA112B5D348B00EDFA92 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B609EA122B5D349400EDFA92 /* HomeScreen */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		B609EA122B5D349400EDFA92 /* HomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B609EA0C2B5D2C2300EDFA92 /* HomeViewController.swift */,
+			);
+			path = HomeScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,6 +161,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B609EA102B5D32EA00EDFA92 /* NetworkManager.swift in Sources */,
 				B609E9F72B5D25F300EDFA92 /* AppDelegate.swift in Sources */,
 				B609E9F92B5D25F300EDFA92 /* SceneDelegate.swift in Sources */,
 				B609EA0D2B5D2C2300EDFA92 /* HomeViewController.swift in Sources */,
