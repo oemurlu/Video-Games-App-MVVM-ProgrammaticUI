@@ -13,6 +13,9 @@
 		B609EA032B5D25F500EDFA92 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B609EA012B5D25F500EDFA92 /* LaunchScreen.storyboard */; };
 		B609EA0D2B5D2C2300EDFA92 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA0C2B5D2C2300EDFA92 /* HomeViewController.swift */; };
 		B609EA102B5D32EA00EDFA92 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA0F2B5D32EA00EDFA92 /* NetworkManager.swift */; };
+		B609EA142B5D34FE00EDFA92 /* APIURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA132B5D34FE00EDFA92 /* APIURLs.swift */; };
+		B609EA172B5D356100EDFA92 /* GameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA162B5D356100EDFA92 /* GameService.swift */; };
+		B609EA1A2B5D38AE00EDFA92 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA192B5D38AE00EDFA92 /* Game.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		B609EA042B5D25F500EDFA92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B609EA0C2B5D2C2300EDFA92 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B609EA0F2B5D32EA00EDFA92 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = "Video-Games-App-MVVM-ProgrammaticUI/NetworkManager.swift"; sourceTree = SOURCE_ROOT; };
+		B609EA132B5D34FE00EDFA92 /* APIURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIURLs.swift; sourceTree = "<group>"; };
+		B609EA162B5D356100EDFA92 /* GameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameService.swift; sourceTree = "<group>"; };
+		B609EA192B5D38AE00EDFA92 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,8 @@
 		B609E9F52B5D25F300EDFA92 /* Video-Games-App-MVVM-ProgrammaticUI */ = {
 			isa = PBXGroup;
 			children = (
+				B609EA182B5D38A100EDFA92 /* Models */,
+				B609EA152B5D355100EDFA92 /* Services */,
 				B609EA0E2B5D32D200EDFA92 /* Utilities */,
 				B609EA112B5D348B00EDFA92 /* Core */,
 				B609E9F62B5D25F300EDFA92 /* AppDelegate.swift */,
@@ -71,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				B609EA0F2B5D32EA00EDFA92 /* NetworkManager.swift */,
+				B609EA132B5D34FE00EDFA92 /* APIURLs.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -89,6 +98,22 @@
 				B609EA0C2B5D2C2300EDFA92 /* HomeViewController.swift */,
 			);
 			path = HomeScreen;
+			sourceTree = "<group>";
+		};
+		B609EA152B5D355100EDFA92 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B609EA162B5D356100EDFA92 /* GameService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B609EA182B5D38A100EDFA92 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B609EA192B5D38AE00EDFA92 /* Game.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +188,10 @@
 			files = (
 				B609EA102B5D32EA00EDFA92 /* NetworkManager.swift in Sources */,
 				B609E9F72B5D25F300EDFA92 /* AppDelegate.swift in Sources */,
+				B609EA1A2B5D38AE00EDFA92 /* Game.swift in Sources */,
 				B609E9F92B5D25F300EDFA92 /* SceneDelegate.swift in Sources */,
+				B609EA172B5D356100EDFA92 /* GameService.swift in Sources */,
+				B609EA142B5D34FE00EDFA92 /* APIURLs.swift in Sources */,
 				B609EA0D2B5D2C2300EDFA92 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
