@@ -11,4 +11,8 @@ enum APIURLs {
     static func games(page: Int) -> String {
         "https://api.rawg.io/api/games?key=b434ff4979084154b0b27f39118e8d57&page_size=10&page=\(page)&platforms=18,1,7"
     }
+    
+    static func feed() -> String {
+        "https://rawg.io/api/collections/must-play/games?key=b434ff4979084154b0b27f39118e8d57"
+    }
 }

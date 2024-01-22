@@ -11,6 +11,8 @@ protocol HomeViewControllerInterface: AnyObject {
     func configureVC()
     func configureCollectionViewCell()
     func reloadCollectionView()
+    func showPopOverFilter()
+    func scrollToTop()
 }
 
 class HomeViewController: UIViewController {
@@ -18,10 +20,11 @@ class HomeViewController: UIViewController {
     private let viewModel = HomeViewModel()
     private var collectionView: UICollectionView!
     private let padding: CGFloat = 16
+    private var rightBarButtonItem: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         viewModel.view = self
         viewModel.viewDidLoad()
     }
@@ -31,12 +34,19 @@ extension HomeViewController: HomeViewControllerInterface {
     func configureVC() {
         view.backgroundColor = .systemBackground
         self.title = "Popular Games"
+        
+        rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .done, target: self, action: #selector(rightBarButton_TUI))
+        rightBarButtonItem.tintColor = .white
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    @objc func rightBarButton_TUI() {
+        viewModel.showPopOverFilter()
     }
     
     func configureCollectionViewCell() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createHomeFlowLayout())
         view.addSubview(collectionView)
-        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -53,6 +63,32 @@ extension HomeViewController: HomeViewControllerInterface {
     
     func reloadCollectionView() {
         collectionView.reloadDataOnMainThread()
+    }
+    
+    func showPopOverFilter() {
+        let popVC = FilterPopOverViewController()
+        let deviceWidth = CGFloat.deviceWidth
+        let size = CGSize(width: deviceWidth / 2.6, height: deviceWidth / 2.6)
+        popVC.delegate = self
+        popVC.preferredContentSize = size
+        popVC.modalPresentationStyle = .popover
+        
+        if let pres = popVC.presentationController {
+            pres.delegate = self
+        }
+        
+        present(popVC, animated: true)
+        
+        if let pop = popVC.popoverPresentationController {
+            pop.barButtonItem = self.rightBarButtonItem
+            pop.permittedArrowDirections = .up
+        }
+    }
+    
+    func scrollToTop() {
+        DispatchQueue.main.async {
+            self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        }
     }
 }
 
@@ -73,7 +109,31 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let height = scrollView.frame.height
         
         if offsetY >= contentHeight - (3 * height) {
-            viewModel.getGames()
+            if viewModel.chosenFilter == .popular {
+                viewModel.getGames(filter: .popular)
+            }
         }
     }
 }
+
+extension HomeViewController: UIPopoverPresentationControllerDelegate {
+    public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
+    }
+}
+
+extension HomeViewController: FilterPopOverDelegate {
+    func filterCellDidSelect(filterBy: FilterBy) {
+        DispatchQueue.main.async {
+            switch filterBy {
+            case .popular:
+                self.viewModel.getGames(filter: .popular)
+            case .feed:
+                self.viewModel.getGames(filter: .feed)
+            case .topRated:
+                break
+            }
+        }
+    }
+}
+    

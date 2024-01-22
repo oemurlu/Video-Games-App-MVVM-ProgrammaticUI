@@ -9,8 +9,19 @@ import Foundation
 
 final class GameService {
     
-    func downloadGames(page: Int, completion: @escaping ([GameResult]?) -> ()) {
-        guard let url = URL(string: APIURLs.games(page: page)) else { return }
+    func downloadGames(filter: FilterBy, page: Int, completion: @escaping ([GameResult]?) -> ()) {
+        var urlString: String = ""
+        switch filter {
+        case .popular:
+            urlString = APIURLs.games(page: page)
+        case .feed:
+            urlString = APIURLs.feed()
+        case .topRated:
+            break
+        }
+        
+        if urlString == "" { return }
+        guard let url = URL(string: urlString) else { return }
         print(url)
         NetworkManager.shared.download(url: url) { [weak self] result in
             guard let self = self else { return }

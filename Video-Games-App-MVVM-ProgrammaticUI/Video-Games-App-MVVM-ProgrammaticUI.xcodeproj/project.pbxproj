@@ -22,6 +22,8 @@
 		B609EA242B5D4A5000EDFA92 /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA232B5D4A5000EDFA92 /* CGFloat+Extension.swift */; };
 		B609EA262B5D4C4F00EDFA92 /* CollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA252B5D4C4F00EDFA92 /* CollectionView+Extension.swift */; };
 		B609EA282B5D4D1500EDFA92 /* PosterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA272B5D4D1500EDFA92 /* PosterImageView.swift */; };
+		B65210102B5E34E100C288B3 /* FilterPopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B652100F2B5E34E100C288B3 /* FilterPopOverViewController.swift */; };
+		B65210122B5E3E5000C288B3 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65210112B5E3E5000C288B3 /* FilterCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		B609EA232B5D4A5000EDFA92 /* CGFloat+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
 		B609EA252B5D4C4F00EDFA92 /* CollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CollectionView+Extension.swift"; path = "../../../../../CollectionView+Extension.swift"; sourceTree = "<group>"; };
 		B609EA272B5D4D1500EDFA92 /* PosterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterImageView.swift; sourceTree = "<group>"; };
+		B652100F2B5E34E100C288B3 /* FilterPopOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPopOverViewController.swift; sourceTree = "<group>"; };
+		B65210112B5E3E5000C288B3 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +139,7 @@
 		B609EA1D2B5D42EB00EDFA92 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B652100E2B5E348400C288B3 /* FilterPopOver */,
 				B609EA1E2B5D432F00EDFA92 /* GameCell.swift */,
 				B609EA272B5D4D1500EDFA92 /* PosterImageView.swift */,
 			);
@@ -148,6 +153,15 @@
 				B609EA252B5D4C4F00EDFA92 /* CollectionView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B652100E2B5E348400C288B3 /* FilterPopOver */ = {
+			isa = PBXGroup;
+			children = (
+				B652100F2B5E34E100C288B3 /* FilterPopOverViewController.swift */,
+				B65210112B5E3E5000C288B3 /* FilterCell.swift */,
+			);
+			path = FilterPopOver;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,7 +236,9 @@
 			files = (
 				B609EA102B5D32EA00EDFA92 /* NetworkManager.swift in Sources */,
 				B609E9F72B5D25F300EDFA92 /* AppDelegate.swift in Sources */,
+				B65210102B5E34E100C288B3 /* FilterPopOverViewController.swift in Sources */,
 				B609EA1F2B5D432F00EDFA92 /* GameCell.swift in Sources */,
+				B65210122B5E3E5000C288B3 /* FilterCell.swift in Sources */,
 				B609EA212B5D49ED00EDFA92 /* UIHelper.swift in Sources */,
 				B609EA262B5D4C4F00EDFA92 /* CollectionView+Extension.swift in Sources */,
 				B609EA1A2B5D38AE00EDFA92 /* Game.swift in Sources */,

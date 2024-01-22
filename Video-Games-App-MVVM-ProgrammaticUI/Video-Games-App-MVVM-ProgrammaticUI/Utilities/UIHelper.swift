@@ -11,7 +11,7 @@ enum UIHelper {
     static func createHomeFlowLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         
-        let cellWidth = CGFloat.dWidth
+        let cellWidth = CGFloat.deviceWidth
         
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: cellWidth, height: cellWidth / 1.2)
