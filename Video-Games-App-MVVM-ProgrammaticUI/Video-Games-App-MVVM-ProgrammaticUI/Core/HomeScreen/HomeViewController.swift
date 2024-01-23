@@ -123,17 +123,8 @@ extension HomeViewController: UIPopoverPresentationControllerDelegate {
 }
 
 extension HomeViewController: FilterPopOverDelegate {
-    func filterCellDidSelect(filterBy: FilterBy) {
-        DispatchQueue.main.async {
-            switch filterBy {
-            case .popular:
-                self.viewModel.getGames(filter: .popular)
-            case .feed:
-                self.viewModel.getGames(filter: .feed)
-            case .topRated:
-                break
-            }
-        }
+    func filterCellDidSelect(filterBy: FilterBy) {        
+        viewModel.filterSelected(filter: filterBy)
     }
 }
     

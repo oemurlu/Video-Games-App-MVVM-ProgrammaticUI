@@ -12,7 +12,7 @@ protocol HomeViewModelInterface {
     func viewDidLoad()
     func getGames(filter: FilterBy)
     func showPopOverFilter()
-    //    func filterGames(filter: FilterBy)
+    func filterSelected(filter: FilterBy)
 }
 
 final class HomeViewModel {
@@ -31,12 +31,13 @@ extension HomeViewModel: HomeViewModelInterface {
     }
     
     func getGames(filter: FilterBy) {
-        
+        // paging yapisi sadece popular games icin gecerli. o yuzden biraz corba oldu kod.
         // Eğer filtre değiştiyse veya aynı filtreye tekrar basıldıysa
         if chosenFilter != filter || (chosenFilter == filter && filter != .popular) {
             chosenFilter = filter
-            games = [] // Listeyi sıfırla
-            page = 1   // Sayfa numarasını sıfırla
+            games = []
+            page = 1
+            view?.reloadCollectionView()
         }
         
         switch filter {
@@ -46,12 +47,14 @@ extension HomeViewModel: HomeViewModelInterface {
                 guard let self = self else { return }
                 guard let returnedGames = returnedGames else { return }
                 self.games.append(contentsOf: returnedGames)
-                //                self.page += 1
                 if !returnedGames.isEmpty {
                     self.page += 1
                 }
+                if !games.isEmpty && chosenFilter != filter {
+                    view?.scrollToTop()
+                }
                 view?.reloadCollectionView()
-                print("popular yuklendi. popular count: \(self.games.count)")
+                print("popular loaded. popular count: \(self.games.count)")
             }
         case .feed:
             self.chosenFilter = .feed
@@ -61,7 +64,7 @@ extension HomeViewModel: HomeViewModelInterface {
                 guard let returnedGames = returnedGames else { return }
                 self.games.append(contentsOf: returnedGames)
                 view?.reloadCollectionView()
-                print("feed yuklendi. feed count: \(self.games.count)")
+                print("feed loaded. feed count: \(self.games.count)")
             }
         case .topRated:
             break
@@ -70,5 +73,13 @@ extension HomeViewModel: HomeViewModelInterface {
     
     func showPopOverFilter() {
         view?.showPopOverFilter()
+    }
+    
+    func filterSelected(filter: FilterBy) {
+        if chosenFilter == filter {
+            view?.scrollToTop()
+        } else {
+            getGames(filter: filter)
+        }
     }
 }
