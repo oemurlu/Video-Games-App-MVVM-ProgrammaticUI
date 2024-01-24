@@ -8,6 +8,7 @@
 import Foundation
 
 struct Game: Decodable {
+    let next: String?
     let results: [GameResult]?
 }
 

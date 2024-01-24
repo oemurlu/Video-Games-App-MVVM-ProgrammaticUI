@@ -12,7 +12,11 @@ enum APIURLs {
         "https://api.rawg.io/api/games?key=b434ff4979084154b0b27f39118e8d57&page_size=10&page=\(page)&platforms=18,1,7"
     }
     
-    static func feed() -> String {
+    static func feed(page: Int) -> String {
         "https://rawg.io/api/collections/must-play/games?key=b434ff4979084154b0b27f39118e8d57"
+    }
+    
+    static func topRated(page: Int) -> String {
+        "https://api.rawg.io/api/games?key=b434ff4979084154b0b27f39118e8d57&ordering=-metacritic&page=\(page)&page_size=10&platforms=18,1,7&metacritic=91,100&dates=2018-01-01,2025-12-31"
     }
 }

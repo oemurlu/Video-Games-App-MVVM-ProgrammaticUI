@@ -109,9 +109,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let height = scrollView.frame.height
         
         if offsetY >= contentHeight - (3 * height) {
-            if viewModel.chosenFilter == .popular {
-                viewModel.getGames(filter: .popular)
-            }
+            viewModel.getGames(filter: viewModel.chosenFilter!)
         }
     }
 }

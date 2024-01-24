@@ -64,7 +64,7 @@ extension FilterPopOverViewController: UITableViewDelegate, UITableViewDataSourc
         switch indexPath.row {
         case 0: cellText = "Popular"
         case 1: cellText = "Feed"
-        case 2: cellText = "Latest"
+        case 2: cellText = "Top Rated"
         default: cellText = ""
         }
         

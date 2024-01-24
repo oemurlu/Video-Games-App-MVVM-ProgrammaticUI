@@ -21,6 +21,7 @@ final class HomeViewModel {
     var games: [GameResult] = []
     private var page: Int = 1
     var chosenFilter: FilterBy?
+    private var canLoadMorePages = true
 }
 
 extension HomeViewModel: HomeViewModelInterface {
@@ -31,43 +32,36 @@ extension HomeViewModel: HomeViewModelInterface {
     }
     
     func getGames(filter: FilterBy) {
-        // paging yapisi sadece popular games icin gecerli. o yuzden biraz corba oldu kod.
-        // Eğer filtre değiştiyse veya aynı filtreye tekrar basıldıysa
-        if chosenFilter != filter || (chosenFilter == filter && filter != .popular) {
+        
+        if !canLoadMorePages { return }
+        
+        if chosenFilter != filter {
             chosenFilter = filter
             games = []
             page = 1
             view?.reloadCollectionView()
         }
         
-        switch filter {
-        case .popular:
-            self.chosenFilter = .popular
-            service.downloadGames(filter: .popular, page: page) { [weak self] returnedGames in
-                guard let self = self else { return }
-                guard let returnedGames = returnedGames else { return }
-                self.games.append(contentsOf: returnedGames)
-                if !returnedGames.isEmpty {
-                    self.page += 1
-                }
-                if !games.isEmpty && chosenFilter != filter {
-                    view?.scrollToTop()
-                }
-                view?.reloadCollectionView()
-                print("popular loaded. popular count: \(self.games.count)")
+        service.downloadGames(filter: filter, page: page) { [weak self] gameResponse in
+            guard let self = self else { return }
+            guard let gameResponse = gameResponse else { return }
+            
+            if let games = gameResponse.results {
+                self.games.append(contentsOf: games)
             }
-        case .feed:
-            self.chosenFilter = .feed
-            print("feed download")
-            service.downloadGames(filter: .feed, page: 1) { [weak self] returnedGames in
-                guard let self = self else { return }
-                guard let returnedGames = returnedGames else { return }
-                self.games.append(contentsOf: returnedGames)
-                view?.reloadCollectionView()
-                print("feed loaded. feed count: \(self.games.count)")
+            
+            if let nextPageUrl = gameResponse.next {
+                self.page += 1
+                self.canLoadMorePages = true
+            } else {
+                self.canLoadMorePages = false
             }
-        case .topRated:
-            break
+            
+//            if !returnedGames.isEmpty {
+//                self.page += 1
+//            }
+            
+            view?.reloadCollectionView()
         }
     }
     
@@ -79,6 +73,7 @@ extension HomeViewModel: HomeViewModelInterface {
         if chosenFilter == filter {
             view?.scrollToTop()
         } else {
+            self.canLoadMorePages = true
             getGames(filter: filter)
         }
     }

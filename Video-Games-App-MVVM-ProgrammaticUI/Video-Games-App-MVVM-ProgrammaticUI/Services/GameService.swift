@@ -9,15 +9,15 @@ import Foundation
 
 final class GameService {
     
-    func downloadGames(filter: FilterBy, page: Int, completion: @escaping ([GameResult]?) -> ()) {
+    func downloadGames(filter: FilterBy, page: Int, completion: @escaping (Game?) -> ()) {
         var urlString: String = ""
         switch filter {
         case .popular:
             urlString = APIURLs.games(page: page)
         case .feed:
-            urlString = APIURLs.feed()
+            urlString = APIURLs.feed(page: page)
         case .topRated:
-            break
+            urlString = APIURLs.topRated(page: page)
         }
         
         if urlString == "" { return }
@@ -38,10 +38,10 @@ final class GameService {
         print(error.localizedDescription)
     }
     
-    private func handleWithData(_ data: Data) -> [GameResult]? {
+    private func handleWithData(_ data: Data) -> Game? {
         do {
-            let movie = try JSONDecoder().decode(Game.self, from: data)
-            return movie.results
+            let gameResponse = try JSONDecoder().decode(Game.self, from: data)
+            return gameResponse
         } catch {
             print(error)
             return nil
