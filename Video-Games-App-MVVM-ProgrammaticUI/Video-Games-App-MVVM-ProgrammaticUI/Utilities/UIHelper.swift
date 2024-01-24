@@ -19,6 +19,23 @@ enum UIHelper {
         
         return layout
     }
+    
+    static func createSearchFlowLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        
+        let padding: CGFloat = 12
+        let minimumSpacing: CGFloat = 12
+        let availableWidth = CGFloat.deviceWidth - (padding * 2) - minimumSpacing
+        let cellWidth = availableWidth / 2
+        
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth / 1.2)
+        layout.minimumLineSpacing = minimumSpacing
+        layout.minimumInteritemSpacing = minimumSpacing
+        layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+        
+        return layout
+    }
 }
 
 

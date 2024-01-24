@@ -57,10 +57,6 @@ extension HomeViewModel: HomeViewModelInterface {
                 self.canLoadMorePages = false
             }
             
-//            if !returnedGames.isEmpty {
-//                self.page += 1
-//            }
-            
             view?.reloadCollectionView()
         }
     }

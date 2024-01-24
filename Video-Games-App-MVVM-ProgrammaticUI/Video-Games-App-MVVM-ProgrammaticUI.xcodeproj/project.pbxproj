@@ -24,6 +24,10 @@
 		B609EA282B5D4D1500EDFA92 /* PosterImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B609EA272B5D4D1500EDFA92 /* PosterImageView.swift */; };
 		B65210102B5E34E100C288B3 /* FilterPopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B652100F2B5E34E100C288B3 /* FilterPopOverViewController.swift */; };
 		B65210122B5E3E5000C288B3 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65210112B5E3E5000C288B3 /* FilterCell.swift */; };
+		B6A952B92B61147E00306A54 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A952B82B61147E00306A54 /* SearchViewController.swift */; };
+		B6A952BB2B6114A200306A54 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A952BA2B6114A200306A54 /* SearchViewModel.swift */; };
+		B6F355552B611BF400D8AF39 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355542B611BF400D8AF39 /* SearchCell.swift */; };
+		B6F355572B611D3600D8AF39 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355562B611D3600D8AF39 /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +50,10 @@
 		B609EA272B5D4D1500EDFA92 /* PosterImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterImageView.swift; sourceTree = "<group>"; };
 		B652100F2B5E34E100C288B3 /* FilterPopOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPopOverViewController.swift; sourceTree = "<group>"; };
 		B65210112B5E3E5000C288B3 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		B6A952B82B61147E00306A54 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		B6A952BA2B6114A200306A54 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		B6F355542B611BF400D8AF39 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		B6F355562B611D3600D8AF39 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +115,7 @@
 			children = (
 				B609EA1D2B5D42EB00EDFA92 /* Components */,
 				B609EA122B5D349400EDFA92 /* HomeScreen */,
+				B6A952B72B61145700306A54 /* SearchScreen */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -142,6 +151,7 @@
 				B652100E2B5E348400C288B3 /* FilterPopOver */,
 				B609EA1E2B5D432F00EDFA92 /* GameCell.swift */,
 				B609EA272B5D4D1500EDFA92 /* PosterImageView.swift */,
+				B6F355542B611BF400D8AF39 /* SearchCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -151,6 +161,7 @@
 			children = (
 				B609EA232B5D4A5000EDFA92 /* CGFloat+Extension.swift */,
 				B609EA252B5D4C4F00EDFA92 /* CollectionView+Extension.swift */,
+				B6F355562B611D3600D8AF39 /* UIView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -162,6 +173,15 @@
 				B65210112B5E3E5000C288B3 /* FilterCell.swift */,
 			);
 			path = FilterPopOver;
+			sourceTree = "<group>";
+		};
+		B6A952B72B61145700306A54 /* SearchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B6A952B82B61147E00306A54 /* SearchViewController.swift */,
+				B6A952BA2B6114A200306A54 /* SearchViewModel.swift */,
+			);
+			path = SearchScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,9 +264,13 @@
 				B609EA1A2B5D38AE00EDFA92 /* Game.swift in Sources */,
 				B609EA1C2B5D402A00EDFA92 /* HomeViewModel.swift in Sources */,
 				B609EA242B5D4A5000EDFA92 /* CGFloat+Extension.swift in Sources */,
+				B6A952B92B61147E00306A54 /* SearchViewController.swift in Sources */,
 				B609E9F92B5D25F300EDFA92 /* SceneDelegate.swift in Sources */,
+				B6F355572B611D3600D8AF39 /* UIView+Extension.swift in Sources */,
 				B609EA172B5D356100EDFA92 /* GameService.swift in Sources */,
+				B6F355552B611BF400D8AF39 /* SearchCell.swift in Sources */,
 				B609EA142B5D34FE00EDFA92 /* APIURLs.swift in Sources */,
+				B6A952BB2B6114A200306A54 /* SearchViewModel.swift in Sources */,
 				B609EA282B5D4D1500EDFA92 /* PosterImageView.swift in Sources */,
 				B609EA0D2B5D2C2300EDFA92 /* HomeViewController.swift in Sources */,
 			);

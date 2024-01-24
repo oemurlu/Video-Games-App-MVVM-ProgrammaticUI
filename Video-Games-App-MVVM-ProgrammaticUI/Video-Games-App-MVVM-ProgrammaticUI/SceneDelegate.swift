@@ -20,11 +20,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let homeNavController = UINavigationController(rootViewController: homeVC)
         homeNavController.tabBarItem = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
         
+        let searchVC = SearchViewController()
+        let searchNavCongroller = UINavigationController(rootViewController: searchVC)
+        searchNavCongroller.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
+        
         let favoritesVC = UIViewController()
         let favoritesNavController = UINavigationController(rootViewController: favoritesVC)
-        favoritesNavController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+        favoritesNavController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 2)
         
-        tabBar.viewControllers = [homeNavController, favoritesNavController]
+        tabBar.viewControllers = [homeNavController, searchNavCongroller, favoritesNavController]
         
         window.rootViewController = tabBar
         
