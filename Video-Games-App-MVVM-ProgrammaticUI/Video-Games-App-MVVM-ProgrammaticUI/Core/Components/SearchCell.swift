@@ -18,8 +18,19 @@ final class SearchCell: UICollectionViewCell {
         configurePosterImageView()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        posterImageView.image = nil
+        posterImageView.cancelDownloading()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setCell(game: GameResult) {
+        posterImageView.downloadImage(game: game)
     }
     
     private func configureCell() {

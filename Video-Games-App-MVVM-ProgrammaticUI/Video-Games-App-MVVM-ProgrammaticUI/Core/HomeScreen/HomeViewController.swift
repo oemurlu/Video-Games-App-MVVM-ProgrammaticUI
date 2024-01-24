@@ -28,6 +28,20 @@ class HomeViewController: UIViewController {
         viewModel.view = self
         viewModel.viewDidLoad()
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        print("HOME-VC INIT")
+    }
+    
+        
+    deinit {
+        print("HOME-VC DEINIT")
+    }
 }
 
 extension HomeViewController: HomeViewControllerInterface {

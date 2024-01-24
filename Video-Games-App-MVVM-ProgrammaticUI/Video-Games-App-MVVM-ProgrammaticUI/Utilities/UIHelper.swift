@@ -29,7 +29,7 @@ enum UIHelper {
         let cellWidth = availableWidth / 2
         
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: cellWidth, height: cellWidth / 1.2)
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth / 1.77)
         layout.minimumLineSpacing = minimumSpacing
         layout.minimumInteritemSpacing = minimumSpacing
         layout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)

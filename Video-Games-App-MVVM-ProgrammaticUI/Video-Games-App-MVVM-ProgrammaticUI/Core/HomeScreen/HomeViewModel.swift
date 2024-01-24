@@ -22,6 +22,15 @@ final class HomeViewModel {
     private var page: Int = 1
     var chosenFilter: FilterBy?
     private var canLoadMorePages = true
+    
+    init() {
+        print("HOME-VM INIT")
+    }
+    
+        
+    deinit {
+        print("HOME-VM DEINIT")
+    }
 }
 
 extension HomeViewModel: HomeViewModelInterface {
@@ -33,7 +42,7 @@ extension HomeViewModel: HomeViewModelInterface {
     
     func getGames(filter: FilterBy) {
         
-        if !canLoadMorePages { return }
+        guard canLoadMorePages else { return }
         
         if chosenFilter != filter {
             chosenFilter = filter
@@ -46,18 +55,20 @@ extension HomeViewModel: HomeViewModelInterface {
             guard let self = self else { return }
             guard let gameResponse = gameResponse else { return }
             
-            if let games = gameResponse.results {
-                self.games.append(contentsOf: games)
+            DispatchQueue.main.async {
+                if let games = gameResponse.results {
+                    self.games.append(contentsOf: games)
+                }
+                
+                if let _ = gameResponse.next {
+                    self.page += 1
+                    self.canLoadMorePages = true
+                } else {
+                    self.canLoadMorePages = false
+                }
+                
+                self.view?.reloadCollectionView()
             }
-            
-            if let nextPageUrl = gameResponse.next {
-                self.page += 1
-                self.canLoadMorePages = true
-            } else {
-                self.canLoadMorePages = false
-            }
-            
-            view?.reloadCollectionView()
         }
     }
     

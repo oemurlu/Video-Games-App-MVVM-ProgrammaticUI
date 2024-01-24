@@ -19,4 +19,8 @@ enum APIURLs {
     static func topRated(page: Int) -> String {
         "https://api.rawg.io/api/games?key=b434ff4979084154b0b27f39118e8d57&ordering=-metacritic&page=\(page)&page_size=10&platforms=18,1,7&metacritic=91,100&dates=2018-01-01,2025-12-31"
     }
+    
+    static func searchGames(name: String, page: Int) -> String {
+        "https://api.rawg.io/api/games?key=b434ff4979084154b0b27f39118e8d57&page_size=20&page=\(page)&platforms=18,1,7&search=\(name)"
+    }
 }

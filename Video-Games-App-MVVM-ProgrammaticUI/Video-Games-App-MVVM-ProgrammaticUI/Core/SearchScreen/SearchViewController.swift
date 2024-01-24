@@ -11,11 +11,13 @@ protocol SearchViewControllerInterface: AnyObject {
     func configureVC()
     func configureSearchBar()
     func configureCollectionView()
+    func reloadCollectionView()
+    func scrollToTop()
 }
 
 final class SearchViewController: UIViewController {
     
-    private let viewModel = SearchViewModel()
+    private var viewModel = SearchViewModel()
     private var collectionView: UICollectionView!
     private var searchBar: UISearchBar!
 
@@ -24,6 +26,21 @@ final class SearchViewController: UIViewController {
 
         viewModel.view = self
         viewModel.viewDidLoad()
+        
+        hideKeyboardWhenTappedAround()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        print("SEARCH-VC INIT")
+    }
+        
+    deinit {
+        print("SEARCH-VC DEINIT")
     }
 }
 
@@ -37,6 +54,8 @@ extension SearchViewController: SearchViewControllerInterface {
         view.addSubview(searchBar)
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.placeholder = "Search games..."
+        
+        searchBar.delegate = self
         
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -53,8 +72,6 @@ extension SearchViewController: SearchViewControllerInterface {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        
-        collectionView.backgroundColor = .blue
     
         collectionView.register(SearchCell.self, forCellWithReuseIdentifier: SearchCell.reuseID)
         
@@ -65,15 +82,42 @@ extension SearchViewController: SearchViewControllerInterface {
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
+    func reloadCollectionView() {
+        collectionView.reloadDataOnMainThread()
+    }
+    
+    func scrollToTop() {
+        DispatchQueue.main.async {
+            self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        }
+    }
 }
 
 extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        viewModel.games.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCell.reuseID, for: indexPath) as! SearchCell
+        cell.setCell(game: viewModel.games[indexPath.item])
         return cell
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.height
+        
+        if offsetY >= contentHeight - (3 * height) {
+            viewModel.searchGames(name: viewModel.searchText)
+        }
+    }
+}
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.searchText = searchText
     }
 }

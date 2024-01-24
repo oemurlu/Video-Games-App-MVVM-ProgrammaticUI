@@ -28,6 +28,7 @@
 		B6A952BB2B6114A200306A54 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A952BA2B6114A200306A54 /* SearchViewModel.swift */; };
 		B6F355552B611BF400D8AF39 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355542B611BF400D8AF39 /* SearchCell.swift */; };
 		B6F355572B611D3600D8AF39 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355562B611D3600D8AF39 /* UIView+Extension.swift */; };
+		B6F355592B615D7C00D8AF39 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355582B615D7C00D8AF39 /* UIViewController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		B6A952BA2B6114A200306A54 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		B6F355542B611BF400D8AF39 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		B6F355562B611D3600D8AF39 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		B6F355582B615D7C00D8AF39 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				B609EA232B5D4A5000EDFA92 /* CGFloat+Extension.swift */,
 				B609EA252B5D4C4F00EDFA92 /* CollectionView+Extension.swift */,
 				B6F355562B611D3600D8AF39 /* UIView+Extension.swift */,
+				B6F355582B615D7C00D8AF39 /* UIViewController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				B609EA212B5D49ED00EDFA92 /* UIHelper.swift in Sources */,
 				B609EA262B5D4C4F00EDFA92 /* CollectionView+Extension.swift in Sources */,
 				B609EA1A2B5D38AE00EDFA92 /* Game.swift in Sources */,
+				B6F355592B615D7C00D8AF39 /* UIViewController+Extension.swift in Sources */,
 				B609EA1C2B5D402A00EDFA92 /* HomeViewModel.swift in Sources */,
 				B609EA242B5D4A5000EDFA92 /* CGFloat+Extension.swift in Sources */,
 				B6A952B92B61147E00306A54 /* SearchViewController.swift in Sources */,
