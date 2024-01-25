@@ -13,6 +13,7 @@ protocol HomeViewModelInterface {
     func getGames(filter: FilterBy)
     func showPopOverFilter()
     func filterSelected(filter: FilterBy)
+    func getDetail(id: Int)
 }
 
 final class HomeViewModel {
@@ -26,7 +27,6 @@ final class HomeViewModel {
     init() {
         print("HOME-VM INIT")
     }
-    
         
     deinit {
         print("HOME-VM DEINIT")
@@ -82,6 +82,15 @@ extension HomeViewModel: HomeViewModelInterface {
         } else {
             self.canLoadMorePages = true
             getGames(filter: filter)
+        }
+    }
+    
+    func getDetail(id: Int) {
+        service.downloadGameDetails(id: id) { [weak self] returnedDetail in
+            guard let self = self else { return }
+            guard let returnedDetail = returnedDetail else { return }
+            
+            self.view?.navigateToDetailScreen(game: returnedDetail)
         }
     }
 }

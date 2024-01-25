@@ -22,12 +22,11 @@ final class GameService {
         
         if urlString == "" { return }
         guard let url = URL(string: urlString) else { return }
-        print(url)
         NetworkManager.shared.download(url: url) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
-                completion(self.handleWithData(data))
+                completion(self.decodeJSON(type: Game.self, data))
             case .failure(let error):
                 self.handleWithError(error)
             }
@@ -36,29 +35,42 @@ final class GameService {
     
     func searchGames(name: String, page: Int, completion: @escaping (Game?) -> ()) {
         guard let url = URL(string: APIURLs.searchGames(name: name, page: page)) else { return }
-        print("SEARCH URL: \(url)")
         NetworkManager.shared.download(url: url) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let data):
-                completion(self.handleWithData(data))
+                completion(self.decodeJSON(type: Game.self, data))
             case .failure(let error):
                 self.handleWithError(error)
             }
         }
     }
     
-    private func handleWithError(_ error: Error) {
-        print(error.localizedDescription)
+    func downloadGameDetails(id: Int, completion: @escaping (GameScreenshots?) -> ()) {
+        guard let url = URL(string: APIURLs.gameDetail(id: id)) else { return }
+        NetworkManager.shared.download(url: url) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                completion(self.decodeJSON(type: GameScreenshots.self, data))
+            case .failure(let error):
+                self.handleWithError(error)
+            }
+        }
     }
-    
-    private func handleWithData(_ data: Data) -> Game? {
+            
+    private func decodeJSON<T: Decodable>(type: T.Type, _ data: Data) -> T? {
         do {
-            let gameResponse = try JSONDecoder().decode(Game.self, from: data)
-            return gameResponse
+            let decodedObj = try JSONDecoder().decode(T.self, from: data)
+            return decodedObj
         } catch {
-            print(error)
+            print(error.localizedDescription)
             return nil
         }
     }
+    
+    private func handleWithError(_ error: Error) {
+        print(error.localizedDescription)
+    }
+
 }

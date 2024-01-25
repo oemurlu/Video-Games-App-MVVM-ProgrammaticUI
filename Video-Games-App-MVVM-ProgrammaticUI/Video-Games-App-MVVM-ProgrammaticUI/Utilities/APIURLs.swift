@@ -23,4 +23,8 @@ enum APIURLs {
     static func searchGames(name: String, page: Int) -> String {
         "https://api.rawg.io/api/games?key=b434ff4979084154b0b27f39118e8d57&page_size=20&page=\(page)&platforms=18,1,7&search=\(name)"
     }
+    
+    static func gameDetail(id: Int) -> String {
+        "https://api.rawg.io/api/games/\(id)/screenshots?&key=b434ff4979084154b0b27f39118e8d57"
+    }
 }

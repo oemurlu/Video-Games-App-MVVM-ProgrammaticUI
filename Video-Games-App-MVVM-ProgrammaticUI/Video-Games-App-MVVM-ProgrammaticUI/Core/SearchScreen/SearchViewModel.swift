@@ -11,6 +11,7 @@ protocol SearchViewModelInterface {
     var view: SearchViewControllerInterface? { get set }
     func viewDidLoad()
     func searchGames(name: String)
+    func getDetail(id: Int)
 }
 
 final class SearchViewModel {
@@ -89,6 +90,16 @@ extension SearchViewModel: SearchViewModelInterface {
                 self.view?.reloadCollectionView()
             }
         }
+    }
+    
+    func getDetail(id: Int) {
+        service.downloadGameDetails(id: id) { [weak self] returnedDetail in
+            guard let self = self else { return }
+            guard let returnedDetail = returnedDetail else { return }
+            
+            self.view?.navigateToDetailScreen(game: returnedDetail)
+        }
+
     }
 }
 

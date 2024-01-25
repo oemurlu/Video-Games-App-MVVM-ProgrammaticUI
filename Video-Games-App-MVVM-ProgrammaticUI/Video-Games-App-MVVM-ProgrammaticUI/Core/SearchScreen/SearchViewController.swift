@@ -13,6 +13,7 @@ protocol SearchViewControllerInterface: AnyObject {
     func configureCollectionView()
     func reloadCollectionView()
     func scrollToTop()
+    func navigateToDetailScreen(game: GameScreenshots)
 }
 
 final class SearchViewController: UIViewController {
@@ -20,7 +21,7 @@ final class SearchViewController: UIViewController {
     private var viewModel = SearchViewModel()
     private var collectionView: UICollectionView!
     private var searchBar: UISearchBar!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,8 +36,8 @@ final class SearchViewController: UIViewController {
     }
     
     init() {
-        super.init(nibName: nil, bundle: nil)
         print("SEARCH-VC INIT")
+        super.init(nibName: nil, bundle: nil)
     }
         
     deinit {
@@ -92,6 +93,13 @@ extension SearchViewController: SearchViewControllerInterface {
             self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
         }
     }
+    
+    func navigateToDetailScreen(game: GameScreenshots) {
+        DispatchQueue.main.async {
+            let detailScreen = DetailViewController(game: game)
+            self.navigationController?.pushViewController(detailScreen, animated: true)
+        }
+    }
 }
 
 extension SearchViewController: UICollectionViewDataSource, UICollectionViewDelegate {
@@ -103,6 +111,11 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCell.reuseID, for: indexPath) as! SearchCell
         cell.setCell(game: viewModel.games[indexPath.item])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let gameId = viewModel.games[indexPath.item]._id
+        viewModel.getDetail(id: gameId)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

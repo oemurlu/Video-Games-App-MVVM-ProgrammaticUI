@@ -13,6 +13,7 @@ protocol HomeViewControllerInterface: AnyObject {
     func reloadCollectionView()
     func showPopOverFilter()
     func scrollToTop()
+    func navigateToDetailScreen(game: GameScreenshots)
 }
 
 class HomeViewController: UIViewController {
@@ -104,6 +105,13 @@ extension HomeViewController: HomeViewControllerInterface {
             self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
         }
     }
+    
+    func navigateToDetailScreen(game: GameScreenshots) {
+        DispatchQueue.main.async {
+            let detailScreen = DetailViewController(game: game)
+            self.navigationController?.pushViewController(detailScreen, animated: true)
+        }
+    }
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -115,6 +123,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GameCell.reuseID, for: indexPath) as! GameCell
         cell.setCell(game: viewModel.games[indexPath.item])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let gameId = viewModel.games[indexPath.item]._id
+        viewModel.getDetail(id: gameId)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
