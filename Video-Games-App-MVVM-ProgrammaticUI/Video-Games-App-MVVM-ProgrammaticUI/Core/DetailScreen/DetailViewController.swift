@@ -17,6 +17,8 @@ protocol DetailViewControllerInterface: AnyObject {
     func configureRatingView()
     func configureRatingStackView()
     func configureOverviewTextView()
+    func configurePageControl()
+    func updatePageControl(currentPageIndex: Int)
 }
 
 class DetailViewController: UIViewController {
@@ -30,6 +32,7 @@ class DetailViewController: UIViewController {
     private var metascoreContainerView: UIView!
     private var ratingContainerView: UIView!
     private var overviewTextView: UITextView!
+    private var pageControl: UIPageControl!
     
     private let padding: CGFloat = 8
     
@@ -70,6 +73,7 @@ extension DetailViewController: DetailViewControllerInterface {
         collectionView.isPagingEnabled = true
         collectionView.register(DetailCell.self, forCellWithReuseIdentifier: DetailCell.reuseID)
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .clear
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -77,6 +81,22 @@ extension DetailViewController: DetailViewControllerInterface {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: CGFloat.deviceWidth / (16/9))
         ])
+    }
+    
+    func configurePageControl() {
+        pageControl = UIPageControl(frame: .zero)
+        view.addSubview(pageControl)
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        pageControl.numberOfPages = viewModel.gameScreenshots.count
+        pageControl.direction = .leftToRight
+        
+        NSLayoutConstraint.activate([
+            pageControl.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: padding),
+            pageControl.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor)
+        ])
+    
+        
     }
     
     func configureNameLabel() {
@@ -90,7 +110,7 @@ extension DetailViewController: DetailViewControllerInterface {
         nameLabel.textColor = .yellow
         
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: padding),
+            nameLabel.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: padding),
             nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
             nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
         ])
@@ -192,12 +212,16 @@ extension DetailViewController: DetailViewControllerInterface {
         overviewTextView.attributedText = viewModel.gameDetails._description.htmlAttributedString(fontSize: 20, hexColorString: "#fff")
         
         NSLayoutConstraint.activate([
-            overviewTextView.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: padding * 2),
+            overviewTextView.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: padding),
             overviewTextView.leadingAnchor.constraint(equalTo: ratingStackView.leadingAnchor),
             overviewTextView.trailingAnchor.constraint(equalTo: ratingStackView.trailingAnchor),
             overviewTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
         ])
     }
+    
+    func updatePageControl(currentPageIndex: Int) {
+            pageControl.currentPage = currentPageIndex
+        }
 
 }
 
@@ -210,5 +234,13 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.reuseID, for: indexPath) as! DetailCell
         cell.setCell(game: viewModel.gameScreenshots[indexPath.item])
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let width = scrollView.frame.width
+        guard width > 0 else { return }
+        
+        let currentPage = Int((scrollView.contentOffset.x + (0.5 * width)) / width)
+        viewModel.updateCurrentPageIndex(currentPage)
     }
 }

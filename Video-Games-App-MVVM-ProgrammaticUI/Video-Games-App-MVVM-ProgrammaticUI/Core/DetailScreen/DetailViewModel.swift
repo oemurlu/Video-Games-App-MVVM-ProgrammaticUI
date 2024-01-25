@@ -11,13 +11,19 @@ protocol DetailViewModelInterface {
     var view: DetailViewControllerInterface? { get set }
     func viewDidLoad()
     func handleGameScreenshots(games: GameScreenshots)
+    func updateCurrentPageIndex(_ index: Int)
 }
 
 final class DetailViewModel {
     weak var view: DetailViewControllerInterface?
     var gameScreenshots: [ScreenShotResults] = []
     var gameDetails: GameResult
-    var screenshotCount: Int = 0
+    var currentPageIndex: Int = 0 {
+        didSet {
+            view?.updatePageControl(currentPageIndex: currentPageIndex)
+        }
+    }
+    
     
     init(gameDetails: GameResult, gameScreenshots: GameScreenshots) {
         self.gameDetails = gameDetails
@@ -29,6 +35,7 @@ extension DetailViewModel: DetailViewModelInterface {
     func viewDidLoad() {
         view?.configureVC()
         view?.configureCollectionView()
+        view?.configurePageControl()
         view?.configureNameLabel()
         view?.configureReleaseLabel()
         view?.configurePlaytimeContainerView()
@@ -41,7 +48,10 @@ extension DetailViewModel: DetailViewModelInterface {
     func handleGameScreenshots(games: GameScreenshots) {
         if let games = games.results {
             gameScreenshots = games
-            screenshotCount = gameScreenshots.count
         }
+    }
+    
+    func updateCurrentPageIndex(_ index: Int) {
+        currentPageIndex = index
     }
 }
