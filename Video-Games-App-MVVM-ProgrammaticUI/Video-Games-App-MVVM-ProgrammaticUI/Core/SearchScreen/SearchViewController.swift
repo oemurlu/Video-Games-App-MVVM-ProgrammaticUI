@@ -13,7 +13,7 @@ protocol SearchViewControllerInterface: AnyObject {
     func configureCollectionView()
     func reloadCollectionView()
     func scrollToTop()
-    func navigateToDetailScreen(game: GameScreenshots)
+    func navigateToDetailScreen(gameDetails: GameResult, gameScreenshots: GameScreenshots)
 }
 
 final class SearchViewController: UIViewController {
@@ -94,9 +94,9 @@ extension SearchViewController: SearchViewControllerInterface {
         }
     }
     
-    func navigateToDetailScreen(game: GameScreenshots) {
+    func navigateToDetailScreen(gameDetails: GameResult, gameScreenshots: GameScreenshots) {
         DispatchQueue.main.async {
-            let detailScreen = DetailViewController(game: game)
+            let detailScreen = DetailViewController(gameDetails: gameDetails, gameScreenshots: gameScreenshots)
             self.navigationController?.pushViewController(detailScreen, animated: true)
         }
     }

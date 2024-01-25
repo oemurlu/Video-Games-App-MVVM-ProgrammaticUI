@@ -19,9 +19,12 @@ struct GameResult: Decodable {
     let backgroundImage: String?
     let rating: Double?
     let id: Int?
+    let metacritic: Int?
+    let playtime :Int?
+    let description: String?
     
     enum CodingKeys: String, CodingKey {
-        case slug, name, released, rating, id
+        case slug, name, released, rating, id, metacritic, playtime, description
         case backgroundImage = "background_image"
     }
     
@@ -47,5 +50,17 @@ struct GameResult: Decodable {
     
     var _id: Int {
         id ?? Int.min
+    }
+    
+    var _metacritic: Int {
+        metacritic ?? 0
+    }
+    
+    var _playtime: Int {
+        playtime ?? 0
+    }
+    
+    var _description: String {
+        description ?? "N/A"
     }
 }

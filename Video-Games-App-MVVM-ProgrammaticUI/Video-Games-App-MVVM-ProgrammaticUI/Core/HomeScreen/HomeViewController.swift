@@ -13,7 +13,7 @@ protocol HomeViewControllerInterface: AnyObject {
     func reloadCollectionView()
     func showPopOverFilter()
     func scrollToTop()
-    func navigateToDetailScreen(game: GameScreenshots)
+    func navigateToDetailScreen(gameDetails: GameResult, gameScreenshots: GameScreenshots)
 }
 
 class HomeViewController: UIViewController {
@@ -106,9 +106,9 @@ extension HomeViewController: HomeViewControllerInterface {
         }
     }
     
-    func navigateToDetailScreen(game: GameScreenshots) {
+    func navigateToDetailScreen(gameDetails: GameResult, gameScreenshots: GameScreenshots) {
         DispatchQueue.main.async {
-            let detailScreen = DetailViewController(game: game)
+            let detailScreen = DetailViewController(gameDetails: gameDetails, gameScreenshots: gameScreenshots)
             self.navigationController?.pushViewController(detailScreen, animated: true)
         }
     }

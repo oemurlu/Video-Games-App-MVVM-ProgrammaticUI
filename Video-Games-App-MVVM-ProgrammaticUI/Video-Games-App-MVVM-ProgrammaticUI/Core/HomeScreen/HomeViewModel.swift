@@ -86,11 +86,12 @@ extension HomeViewModel: HomeViewModelInterface {
     }
     
     func getDetail(id: Int) {
-        service.downloadGameDetails(id: id) { [weak self] returnedDetail in
+        service.downloadGameDetailsAndScreenshots(id: id) { [weak self] (returnedDetails, returnedScreenshots) in
             guard let self = self else { return }
-            guard let returnedDetail = returnedDetail else { return }
+            guard let details = returnedDetails, let screenshots = returnedScreenshots else { return }
             
-            self.view?.navigateToDetailScreen(game: returnedDetail)
+            self.view?.navigateToDetailScreen(gameDetails: details, gameScreenshots: screenshots)
+            
         }
     }
 }

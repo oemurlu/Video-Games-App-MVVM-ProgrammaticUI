@@ -36,6 +36,41 @@ enum UIHelper {
         
         return layout
     }
+    
+    static func createDetailFlowLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        
+        let cellWidth = CGFloat.deviceWidth
+        
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth / (16/9))
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        return layout
+    }
+    
+    static func createContainerViewForDetailScreenStackView(withBorderColor borderColor: UIColor, cornerRadius: CGFloat) -> UIView {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.borderWidth = 1
+        view.layer.borderColor = borderColor.cgColor
+        view.layer.cornerRadius = cornerRadius
+        view.clipsToBounds = true
+        return view
+        
+    }
+    
+    static func createLabelForDetailScreenStackView(withText text: String, fontSize: CGFloat, fontWeight: UIFont.Weight) -> UILabel {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = text
+        label.font = .systemFont(ofSize: fontSize, weight: fontWeight)
+        label.textAlignment = .center
+        return label
+        
+    }
 }
 
 

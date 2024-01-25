@@ -36,6 +36,21 @@ final class PosterImageView: UIImageView {
         })
     }
     
+    func downloadDetailImage(game: ScreenShotResults) {
+        guard let url = URL(string: game._image) else { return }
+        dataTask = NetworkManager.shared.download(url: url, completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    self.image = UIImage(data: data)
+                }
+            case .failure(_):
+                break
+            }
+        })
+    }
+    
     func cancelDownloading() {
         dataTask?.cancel()
         dataTask = nil
