@@ -26,9 +26,19 @@ final class DetailViewModel {
     
     
     init(gameDetails: GameResult, gameScreenshots: GameScreenshots) {
+        print("DETAIL-VM INIT")
         self.gameDetails = gameDetails
         handleGameScreenshots(games: gameScreenshots)
     }
+    
+    deinit {
+        print("DETAIL-VM DEINIT")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 }
 
 extension DetailViewModel: DetailViewModelInterface {

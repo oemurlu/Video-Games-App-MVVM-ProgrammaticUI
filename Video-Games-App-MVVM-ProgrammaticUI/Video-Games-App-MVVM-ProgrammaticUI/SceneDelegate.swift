@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let searchNavCongroller = UINavigationController(rootViewController: searchVC)
         searchNavCongroller.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
         
-        let favoritesVC = UIViewController()
+        let favoritesVC = FavoritesViewController()
         let favoritesNavController = UINavigationController(rootViewController: favoritesVC)
         favoritesNavController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 2)
         

@@ -38,6 +38,7 @@ final class DetailCell: UICollectionViewCell {
         posterImageView = PosterImageView(frame: .zero)
         addSubview(posterImageView)
         posterImageView.pinToEdgesOf(view: self)
+        posterImageView.backgroundColor = .green
     }
     
     func setCell(game: ScreenShotResults) {
