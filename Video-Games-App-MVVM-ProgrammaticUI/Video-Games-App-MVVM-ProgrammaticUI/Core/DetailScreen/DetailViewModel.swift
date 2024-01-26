@@ -47,6 +47,7 @@ extension DetailViewModel: DetailViewModelInterface {
         view?.configureCollectionView()
         view?.configurePageControl()
         view?.configureNameLabel()
+        view?.configureFavoriteButton()
         view?.configureReleaseLabel()
         view?.configurePlaytimeContainerView()
         view?.configureRatingView()

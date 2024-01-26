@@ -11,6 +11,7 @@ protocol DetailViewControllerInterface: AnyObject {
     func configureVC()
     func configureCollectionView()
     func configureNameLabel()
+    func configureFavoriteButton()
     func configureReleaseLabel()
     func configurePlaytimeContainerView()
     func configureMetascoreView()
@@ -33,6 +34,7 @@ class DetailViewController: UIViewController {
     private var ratingContainerView: UIView!
     private var overviewTextView: UITextView!
     private var pageControl: UIPageControl!
+    private var favoriteButton: UIButton!
     
     private let padding: CGFloat = 8
     
@@ -95,8 +97,6 @@ extension DetailViewController: DetailViewControllerInterface {
             pageControl.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: padding),
             pageControl.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor)
         ])
-    
-        
     }
     
     func configureNameLabel() {
@@ -112,9 +112,31 @@ extension DetailViewController: DetailViewControllerInterface {
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: padding),
             nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
-            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
         ])
     }
+    
+    func configureFavoriteButton() {
+        favoriteButton = UIButton(type: .custom)
+        view.addSubview(favoriteButton)
+        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .semibold, scale: .large)
+        let largeHeart = UIImage(systemName: "heart", withConfiguration: largeConfig)?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        let largeHeartFill = UIImage(systemName: "heart.fill", withConfiguration: largeConfig)?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        
+        favoriteButton.setImage(largeHeart, for: .normal)
+        favoriteButton.setImage(largeHeartFill, for: .selected)
+        favoriteButton.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
+        
+        NSLayoutConstraint.activate([
+            favoriteButton.topAnchor.constraint(equalTo: nameLabel.topAnchor),
+            favoriteButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
+            favoriteButton.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: padding),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 50),
+            favoriteButton.widthAnchor.constraint(equalTo: favoriteButton.heightAnchor)
+        ])
+    }
+
     
     func configureReleaseLabel() {
         releaseLabel = UILabel(frame: .zero)
@@ -128,7 +150,7 @@ extension DetailViewController: DetailViewControllerInterface {
         NSLayoutConstraint.activate([
             releaseLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: padding),
             releaseLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            releaseLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor)
+            releaseLabel.trailingAnchor.constraint(equalTo: favoriteButton.trailingAnchor)
         ])
     }
     
@@ -242,5 +264,19 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         
         let currentPage = Int((scrollView.contentOffset.x + (0.5 * width)) / width)
         viewModel.updateCurrentPageIndex(currentPage)
+    }
+}
+
+extension DetailViewController {
+    @objc private func favoriteButtonTapped(sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        
+        if sender.isSelected {
+            //TODO: Add to favorites
+            print("add")
+        } else {
+            //TODO: Remove from favorites
+            print("remove")
+        }
     }
 }
