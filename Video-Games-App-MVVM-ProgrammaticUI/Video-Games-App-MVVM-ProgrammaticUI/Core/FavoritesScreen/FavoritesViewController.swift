@@ -38,8 +38,6 @@ class FavoritesViewController: UIViewController {
 
         viewModel.view = self
         viewModel.viewDidLoad()
-        
-        
     }
 }
 

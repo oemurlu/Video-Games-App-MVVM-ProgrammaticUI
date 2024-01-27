@@ -68,7 +68,6 @@ final class GameService {
         dispatchGroup.notify(queue: .main) {
             completion(gameDetails, gameScreenshots)
         }
-        
     }
     
     private func downloadGameScreenshots(id: Int, completion: @escaping (GameScreenshots?) -> ()) {

@@ -37,6 +37,8 @@
 		B6F355682B637F7500D8AF39 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355672B637F7500D8AF39 /* FavoritesViewController.swift */; };
 		B6F3556A2B637F8400D8AF39 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355692B637F8400D8AF39 /* FavoritesViewModel.swift */; };
 		B6F3556E2B63855B00D8AF39 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3556D2B63855B00D8AF39 /* FavoriteCell.swift */; };
+		B6F355732B63DB7300D8AF39 /* FavoriteGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355722B63DB7300D8AF39 /* FavoriteGame.swift */; };
+		B6F355752B63DB8800D8AF39 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355742B63DB8800D8AF39 /* FavoritesManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,8 @@
 		B6F355672B637F7500D8AF39 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		B6F355692B637F8400D8AF39 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		B6F3556D2B63855B00D8AF39 /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
+		B6F355722B63DB7300D8AF39 /* FavoriteGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGame.swift; sourceTree = "<group>"; };
+		B6F355742B63DB8800D8AF39 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 				B609EA152B5D355100EDFA92 /* Services */,
 				B609EA0E2B5D32D200EDFA92 /* Utilities */,
 				B609EA112B5D348B00EDFA92 /* Core */,
+				B6F3556F2B63DB4D00D8AF39 /* Database */,
 				B609E9F62B5D25F300EDFA92 /* AppDelegate.swift */,
 				B609E9F82B5D25F300EDFA92 /* SceneDelegate.swift */,
 				B609E9FF2B5D25F500EDFA92 /* Assets.xcassets */,
@@ -227,6 +232,31 @@
 			path = FavoritesScreen;
 			sourceTree = "<group>";
 		};
+		B6F3556F2B63DB4D00D8AF39 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				B6F355702B63DB5500D8AF39 /* Models */,
+				B6F355712B63DB5B00D8AF39 /* Managers */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		B6F355702B63DB5500D8AF39 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B6F355722B63DB7300D8AF39 /* FavoriteGame.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B6F355712B63DB5B00D8AF39 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				B6F355742B63DB8800D8AF39 /* FavoritesManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -298,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6F355682B637F7500D8AF39 /* FavoritesViewController.swift in Sources */,
+				B6F355752B63DB8800D8AF39 /* FavoritesManager.swift in Sources */,
 				B609EA102B5D32EA00EDFA92 /* NetworkManager.swift in Sources */,
 				B609E9F72B5D25F300EDFA92 /* AppDelegate.swift in Sources */,
 				B65210102B5E34E100C288B3 /* FilterPopOverViewController.swift in Sources */,
@@ -311,6 +342,7 @@
 				B6F355602B62302B00D8AF39 /* GameScreenshots.swift in Sources */,
 				B609EA1A2B5D38AE00EDFA92 /* Game.swift in Sources */,
 				B6F3555E2B619B2400D8AF39 /* DetailViewModel.swift in Sources */,
+				B6F355732B63DB7300D8AF39 /* FavoriteGame.swift in Sources */,
 				B6F355592B615D7C00D8AF39 /* UIViewController+Extension.swift in Sources */,
 				B609EA1C2B5D402A00EDFA92 /* HomeViewModel.swift in Sources */,
 				B609EA242B5D4A5000EDFA92 /* CGFloat+Extension.swift in Sources */,

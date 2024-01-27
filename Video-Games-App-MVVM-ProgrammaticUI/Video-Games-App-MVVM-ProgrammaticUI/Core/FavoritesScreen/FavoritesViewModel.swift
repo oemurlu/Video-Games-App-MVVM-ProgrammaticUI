@@ -10,10 +10,20 @@ import Foundation
 protocol FavoritesViewModelInterface {
     var view: FavoritesViewControllerInterface? { get set }
     func viewDidLoad()
+    func loadFavorites()
+    func refreshFavorites()
 }
 
 final class FavoritesViewModel {
     weak var view: FavoritesViewControllerInterface?
+    private let service = GameService()
+    private var favoriteIds: [Int] = [] {
+        didSet {
+            if oldValue != favoriteIds {
+                loadFavorites()
+            }
+        }
+    }
     
     init() {
         print("FAVORITE-VM INIT")
@@ -33,4 +43,20 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
         view?.configureVC()
         view?.configureTableView()
     }
+    
+    func loadFavorites() {
+        favoriteIds = FavoritesManager.shared.getFavoriteGameIDs()
+        for id in favoriteIds {
+            service.downloadGameDetailsAndScreenshots(id: id) { (details, screenshots) in
+                // Gelen verileri kullanarak arayüzü güncelle
+            }
+        }
+    }
+    
+    func refreshFavorites() {
+            let newFavoriteIds = FavoritesManager.shared.getFavoriteGameIDs()
+            if newFavoriteIds != favoriteIds {
+                favoriteIds = newFavoriteIds
+            }
+        }
 }

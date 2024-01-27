@@ -12,6 +12,9 @@ protocol DetailViewModelInterface {
     func viewDidLoad()
     func handleGameScreenshots(games: GameScreenshots)
     func updateCurrentPageIndex(_ index: Int)
+    func addGameToFavorites()
+    func removeGameFromFavorites()
+    func checkIfGameIsFavorite()
 }
 
 final class DetailViewModel {
@@ -23,6 +26,8 @@ final class DetailViewModel {
             view?.updatePageControl(currentPageIndex: currentPageIndex)
         }
     }
+    
+    private let favoriteManager = FavoritesManager.shared
     
     
     init(gameDetails: GameResult, gameScreenshots: GameScreenshots) {
@@ -64,5 +69,20 @@ extension DetailViewModel: DetailViewModelInterface {
     
     func updateCurrentPageIndex(_ index: Int) {
         currentPageIndex = index
+    }
+    
+    func addGameToFavorites() {
+        guard let gameId = gameDetails.id else { return }
+        favoriteManager.addFavorite(gameId: gameId)
+    }
+    
+    func removeGameFromFavorites() {
+        guard let gameId = gameDetails.id else { return }
+        favoriteManager.removeFavorite(gameId: gameId)
+    }
+    
+    func checkIfGameIsFavorite() {
+        guard let gameId = gameDetails.id else { return }
+        let isFavorite = favoriteManager.isFavorite(gameId: gameId)
     }
 }

@@ -57,6 +57,7 @@ class DetailViewController: UIViewController {
         
         viewModel.view = self
         viewModel.viewDidLoad()
+        viewModel.checkIfGameIsFavorite()
     }
 }
 
@@ -272,11 +273,9 @@ extension DetailViewController {
         sender.isSelected = !sender.isSelected
         
         if sender.isSelected {
-            //TODO: Add to favorites
-            print("add")
+            viewModel.addGameToFavorites()
         } else {
-            //TODO: Remove from favorites
-            print("remove")
+            viewModel.removeGameFromFavorites()
         }
     }
 }
