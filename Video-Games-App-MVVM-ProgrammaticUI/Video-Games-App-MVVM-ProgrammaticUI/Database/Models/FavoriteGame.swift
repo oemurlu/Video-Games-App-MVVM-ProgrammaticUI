@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import SwiftData
 
-struct FavoriteGame {
-    let id: Int?
+@Model
+class FavoriteGame {
+    let id: Int
     
-    var _id: Int {
-        id ?? 0
+    init(id: Int) {
+        self.id = id
     }
 }

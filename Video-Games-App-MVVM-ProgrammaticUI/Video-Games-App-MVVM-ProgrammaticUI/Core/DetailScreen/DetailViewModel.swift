@@ -12,13 +12,15 @@ protocol DetailViewModelInterface {
     func viewDidLoad()
     func handleGameScreenshots(games: GameScreenshots)
     func updateCurrentPageIndex(_ index: Int)
-    func addGameToFavorites()
-    func removeGameFromFavorites()
+    func addGameToFavorites(completion: @escaping () -> Void)
+    func removeGameFromFavorites(completion: @escaping () -> Void)
     func checkIfGameIsFavorite()
+    func favoriteButtonTapped()
 }
 
 final class DetailViewModel {
     weak var view: DetailViewControllerInterface?
+    private let favoriteManager = FavoritesManager.shared
     var gameScreenshots: [ScreenShotResults] = []
     var gameDetails: GameResult
     var currentPageIndex: Int = 0 {
@@ -26,9 +28,7 @@ final class DetailViewModel {
             view?.updatePageControl(currentPageIndex: currentPageIndex)
         }
     }
-    
-    private let favoriteManager = FavoritesManager.shared
-    
+    var isFavorite: Bool = false
     
     init(gameDetails: GameResult, gameScreenshots: GameScreenshots) {
         print("DETAIL-VM INIT")
@@ -43,7 +43,6 @@ final class DetailViewModel {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension DetailViewModel: DetailViewModelInterface {
@@ -71,18 +70,40 @@ extension DetailViewModel: DetailViewModelInterface {
         currentPageIndex = index
     }
     
-    func addGameToFavorites() {
+    func addGameToFavorites(completion: @escaping () -> Void) {
         guard let gameId = gameDetails.id else { return }
-        favoriteManager.addFavorite(gameId: gameId)
+        favoriteManager.addFavorite(gameId: gameId) { [weak self] in
+            guard let self = self else { return }
+            self.isFavorite = true
+            completion()
+        }
     }
-    
-    func removeGameFromFavorites() {
+    func removeGameFromFavorites(completion: @escaping () -> Void) {
         guard let gameId = gameDetails.id else { return }
-        favoriteManager.removeFavorite(gameId: gameId)
+        guard let gameToRemove = favoriteManager.favoriteGames.first(where: { $0.id == gameId }) else { return }
+        favoriteManager.removeFavorite(game: gameToRemove) { [weak self] in
+                guard let self = self else { return }
+                self.isFavorite = false
+                completion()
+            }
     }
     
     func checkIfGameIsFavorite() {
         guard let gameId = gameDetails.id else { return }
-        let isFavorite = favoriteManager.isFavorite(gameId: gameId)
+        isFavorite = favoriteManager.favoriteGames.contains(where: { $0.id == gameId })
+        view?.updateFavoriteButton(isFavorited: isFavorite)
     }
+    
+    func favoriteButtonTapped() {
+        if isFavorite {
+            removeGameFromFavorites {
+                self.view?.updateFavoriteButton(isFavorited: self.isFavorite)
+            }
+        } else {
+            addGameToFavorites {
+                self.view?.updateFavoriteButton(isFavorited: self.isFavorite)
+            }
+        }
+    }
+    
 }

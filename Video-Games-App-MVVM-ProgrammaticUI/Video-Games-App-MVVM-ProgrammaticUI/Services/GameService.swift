@@ -83,7 +83,7 @@ final class GameService {
         }
     }
     
-    private func downloadGameDetails(id: Int, completion: @escaping (GameResult?) -> ()) {
+    func downloadGameDetails(id: Int, completion: @escaping (GameResult?) -> ()) {
         guard let url = URL(string: APIURLs.gameDetail(id: id)) else { return }
         NetworkManager.shared.download(url: url) { [weak self] result in
             guard let self = self else { return }

@@ -10,14 +10,13 @@ import UIKit
 protocol FavoritesViewControllerInterface: AnyObject {
     func configureVC()
     func configureTableView()
+    func reloadTableViewOnMain()
 }
 
 class FavoritesViewController: UIViewController {
     
     private let viewModel = FavoritesViewModel()
     private var tableView: UITableView!
-    let mockGameScreenshot = ScreenShotResults(image: "https://media.rawg.io/media/games/490/49016e06ae2103881ff6373248843069.jpg")
-    let mockGameDetail = GameResult(slug: "", name: "Red Dead Redemption 2", released: "2018-05-31", backgroundImage: "https://media.rawg.io/media/games/511/5118aff5091cb3efec399c808f8c598f.jpg", rating: 4.8, id: 28, metacritic: 96, playtime: 20, description: "lorem ipsum dolor")
 
     init() {
         print("FAVORITE-VC INIT")
@@ -32,12 +31,15 @@ class FavoritesViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         viewModel.view = self
         viewModel.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.viewWillAppear()
     }
 }
 
@@ -60,21 +62,25 @@ extension FavoritesViewController: FavoritesViewControllerInterface {
         tableView.backgroundColor = .clear
         tableView.pinToEdgesOfSafeArea(view: view)
     }
+    
+    func reloadTableViewOnMain() {
+        tableView.reloadDataOnMainThread()
+    }
 }
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        viewModel.gameDetails.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteCell.reuseID, for: indexPath) as! FavoriteCell
-        cell.setCell(game: mockGameDetail)
+        cell.setCell(game: viewModel.gameDetails[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("clicked ip: \(indexPath.row)")
+        viewModel.deleteFromFavorites(indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

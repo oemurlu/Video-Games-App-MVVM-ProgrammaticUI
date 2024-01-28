@@ -20,6 +20,7 @@ protocol DetailViewControllerInterface: AnyObject {
     func configureOverviewTextView()
     func configurePageControl()
     func updatePageControl(currentPageIndex: Int)
+    func updateFavoriteButton(isFavorited: Bool)
 }
 
 class DetailViewController: UIViewController {
@@ -244,6 +245,10 @@ extension DetailViewController: DetailViewControllerInterface {
     
     func updatePageControl(currentPageIndex: Int) {
             pageControl.currentPage = currentPageIndex
+    }
+    
+    func updateFavoriteButton(isFavorited: Bool) {
+            favoriteButton.isSelected = isFavorited
         }
 
 }
@@ -270,12 +275,14 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
 
 extension DetailViewController {
     @objc private func favoriteButtonTapped(sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        
-        if sender.isSelected {
-            viewModel.addGameToFavorites()
-        } else {
-            viewModel.removeGameFromFavorites()
+        viewModel.favoriteButtonTapped()
+    }
+
+    private func updateFavoriteButtonState() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.favoriteButton.isSelected = self.viewModel.isFavorite
         }
     }
 }
+
