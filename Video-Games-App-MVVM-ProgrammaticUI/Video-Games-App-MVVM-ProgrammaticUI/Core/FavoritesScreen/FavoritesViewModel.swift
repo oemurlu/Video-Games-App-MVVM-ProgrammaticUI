@@ -96,7 +96,7 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
                 self.gameDetails.remove(at: indexInGameDetails)
             }
             
-            self.view?.reloadTableViewOnMain()
+            self.view?.deleteTableRowWithAnimation(indexPath: indexPath)
         }
     }
 }

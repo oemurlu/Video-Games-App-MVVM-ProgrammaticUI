@@ -11,6 +11,7 @@ protocol FavoritesViewControllerInterface: AnyObject {
     func configureVC()
     func configureTableView()
     func reloadTableViewOnMain()
+    func deleteTableRowWithAnimation(indexPath: IndexPath)
 }
 
 class FavoritesViewController: UIViewController {
@@ -66,6 +67,12 @@ extension FavoritesViewController: FavoritesViewControllerInterface {
     func reloadTableViewOnMain() {
         tableView.reloadDataOnMainThread()
     }
+    
+    func deleteTableRowWithAnimation(indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
 }
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
@@ -79,11 +86,22 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.deleteFromFavorites(indexPath: indexPath)
-    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         CGFloat.deviceWidth / 2.3
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completion) in
+            guard let self = self else { return }
+            self.viewModel.deleteFromFavorites(indexPath: indexPath)
+            completion(true)
+        }
+        
+        deleteAction.backgroundColor = .systemRed
+        deleteAction.image = UIImage(systemName: "trash.fill")
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    
 }
