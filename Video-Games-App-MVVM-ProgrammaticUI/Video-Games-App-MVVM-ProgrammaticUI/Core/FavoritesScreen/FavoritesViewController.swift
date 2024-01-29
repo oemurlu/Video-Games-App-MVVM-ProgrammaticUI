@@ -12,6 +12,8 @@ protocol FavoritesViewControllerInterface: AnyObject {
     func configureTableView()
     func reloadTableViewOnMain()
     func deleteTableRowWithAnimation(indexPath: IndexPath)
+    func startActivityIndicator()
+    func stopActivityIndicator()
 }
 
 class FavoritesViewController: UIViewController {
@@ -73,6 +75,15 @@ extension FavoritesViewController: FavoritesViewControllerInterface {
             self.tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
+    
+    func startActivityIndicator() {
+        ActivityIndicatorHelper.shared.start()
+    }
+    
+    func stopActivityIndicator() {
+        ActivityIndicatorHelper.shared.stop()
+    }
+
 }
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {

@@ -41,6 +41,7 @@
 		B6F355752B63DB8800D8AF39 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355742B63DB8800D8AF39 /* FavoritesManager.swift */; };
 		B6F355772B64FC7F00D8AF39 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355762B64FC7F00D8AF39 /* UITableView+Extension.swift */; };
 		B6F355792B66A00E00D8AF39 /* ModelContext+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355782B66A00E00D8AF39 /* ModelContext+Extension.swift */; };
+		B6F3557B2B6780F900D8AF39 /* ActivityIndicatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3557A2B6780F900D8AF39 /* ActivityIndicatorHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		B6F355742B63DB8800D8AF39 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 		B6F355762B64FC7F00D8AF39 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		B6F355782B66A00E00D8AF39 /* ModelContext+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelContext+Extension.swift"; sourceTree = "<group>"; };
+		B6F3557A2B6780F900D8AF39 /* ActivityIndicatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,8 +118,8 @@
 				B609EA182B5D38A100EDFA92 /* Models */,
 				B609EA152B5D355100EDFA92 /* Services */,
 				B609EA0E2B5D32D200EDFA92 /* Utilities */,
-				B609EA112B5D348B00EDFA92 /* Core */,
 				B6F3556F2B63DB4D00D8AF39 /* Database */,
+				B609EA112B5D348B00EDFA92 /* Core */,
 				B609E9F62B5D25F300EDFA92 /* AppDelegate.swift */,
 				B609E9F82B5D25F300EDFA92 /* SceneDelegate.swift */,
 				B609E9FF2B5D25F500EDFA92 /* Assets.xcassets */,
@@ -133,6 +135,7 @@
 				B609EA0F2B5D32EA00EDFA92 /* NetworkManager.swift */,
 				B609EA132B5D34FE00EDFA92 /* APIURLs.swift */,
 				B609EA202B5D49ED00EDFA92 /* UIHelper.swift */,
+				B6F3557A2B6780F900D8AF39 /* ActivityIndicatorHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				B6F355592B615D7C00D8AF39 /* UIViewController+Extension.swift in Sources */,
 				B609EA1C2B5D402A00EDFA92 /* HomeViewModel.swift in Sources */,
 				B609EA242B5D4A5000EDFA92 /* CGFloat+Extension.swift in Sources */,
+				B6F3557B2B6780F900D8AF39 /* ActivityIndicatorHelper.swift in Sources */,
 				B6F355632B623D8100D8AF39 /* DetailCell.swift in Sources */,
 				B6A952B92B61147E00306A54 /* SearchViewController.swift in Sources */,
 				B6F355792B66A00E00D8AF39 /* ModelContext+Extension.swift in Sources */,

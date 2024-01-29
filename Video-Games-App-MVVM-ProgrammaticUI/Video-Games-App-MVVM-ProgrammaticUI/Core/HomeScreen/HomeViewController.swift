@@ -14,6 +14,8 @@ protocol HomeViewControllerInterface: AnyObject {
     func showPopOverFilter()
     func scrollToTop()
     func navigateToDetailScreen(gameDetails: GameResult, gameScreenshots: GameScreenshots)
+    func startActivityIndicator()
+    func stopActivityIndicator()
 }
 
 class HomeViewController: UIViewController {
@@ -111,6 +113,14 @@ extension HomeViewController: HomeViewControllerInterface {
             let detailScreen = DetailViewController(gameDetails: gameDetails, gameScreenshots: gameScreenshots)
             self.navigationController?.pushViewController(detailScreen, animated: true)
         }
+    }
+    
+    func startActivityIndicator() {
+        ActivityIndicatorHelper.shared.start()
+    }
+    
+    func stopActivityIndicator() {
+        ActivityIndicatorHelper.shared.stop()
     }
 }
 

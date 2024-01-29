@@ -29,6 +29,7 @@ final class GameService {
                 completion(self.decodeJSON(type: Game.self, data))
             case .failure(let error):
                 self.handleWithError(error)
+                completion(nil)
             }
         }
     }
@@ -42,6 +43,7 @@ final class GameService {
                 completion(self.decodeJSON(type: Game.self, data))
             case .failure(let error):
                 self.handleWithError(error)
+                completion(nil)
             }
         }
     }
@@ -79,6 +81,7 @@ final class GameService {
                 completion(self.decodeJSON(type: GameScreenshots.self, data))
             case .failure(let error):
                 self.handleWithError(error)
+                completion(nil)
             }
         }
     }
@@ -92,6 +95,7 @@ final class GameService {
                 completion(self.decodeJSON(type: GameResult.self, data))
             case .failure(let error):
                 self.handleWithError(error)
+                completion(nil)
             }
         }
     }

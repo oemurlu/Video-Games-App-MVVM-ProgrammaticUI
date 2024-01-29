@@ -41,9 +41,8 @@ extension HomeViewModel: HomeViewModelInterface {
     }
     
     func getGames(filter: FilterBy) {
-        
         guard canLoadMorePages else { return }
-        
+        view?.startActivityIndicator()
         if chosenFilter != filter {
             chosenFilter = filter
             games = []
@@ -53,9 +52,14 @@ extension HomeViewModel: HomeViewModelInterface {
         
         service.downloadGames(filter: filter, page: page) { [weak self] gameResponse in
             guard let self = self else { return }
-            guard let gameResponse = gameResponse else { return }
+            guard let gameResponse = gameResponse else {
+                self.view?.stopActivityIndicator()
+                //TODO: show alert and ask try again for request
+                return
+            }
             
             DispatchQueue.main.async {
+                self.view?.stopActivityIndicator()
                 if let games = gameResponse.results {
                     self.games.append(contentsOf: games)
                 }
@@ -86,9 +90,14 @@ extension HomeViewModel: HomeViewModelInterface {
     }
     
     func getDetail(id: Int) {
+        view?.startActivityIndicator()
         service.downloadGameDetailsAndScreenshots(id: id) { [weak self] (returnedDetails, returnedScreenshots) in
             guard let self = self else { return }
-            guard let details = returnedDetails, let screenshots = returnedScreenshots else { return }
+            guard let details = returnedDetails, let screenshots = returnedScreenshots else {
+                view?.stopActivityIndicator()
+                print("yeniden navigate denensin mi?")
+                return
+            }
             
             self.view?.navigateToDetailScreen(gameDetails: details, gameScreenshots: screenshots)
             

@@ -71,12 +71,18 @@ extension SearchViewModel: SearchViewModelInterface {
     
     func searchGames(name: String) {
         guard canLoadMorePages else { return }
-        
+        view?.startActivityIndicator()
         service.searchGames(name: name, page: page) { [weak self] searchResponse in
             guard let self = self else { return }
-            guard let searchResponse = searchResponse else { return }
+            guard let searchResponse = searchResponse else {
+                view?.stopActivityIndicator()
+                print("yeniden denensin mi?")
+                //TODO: show alert and ask try again for request
+                return
+            }
             
             DispatchQueue.main.async {
+                self.view?.stopActivityIndicator()
                 if let games = searchResponse.results {
                     self.games.append(contentsOf: games)
                 }
@@ -93,9 +99,14 @@ extension SearchViewModel: SearchViewModelInterface {
     }
     
     func getDetail(id: Int) {
+        view?.startActivityIndicator()
         service.downloadGameDetailsAndScreenshots(id: id) { [weak self] (returnedDetails, returnedScreenshots) in
             guard let self = self else { return }
-            guard let details = returnedDetails, let screenshots = returnedScreenshots else { return }
+            guard let details = returnedDetails, let screenshots = returnedScreenshots else {
+                view?.stopActivityIndicator()
+                print("yeniden navigate denensin mi?")
+                return
+            }
             
             self.view?.navigateToDetailScreen(gameDetails: details, gameScreenshots: screenshots)
         }

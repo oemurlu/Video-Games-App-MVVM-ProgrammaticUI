@@ -21,6 +21,8 @@ protocol DetailViewControllerInterface: AnyObject {
     func configurePageControl()
     func updatePageControl(currentPageIndex: Int)
     func updateFavoriteButton(isFavorited: Bool)
+    func startActivityIndicator()
+    func stopActivityIndicator()
 }
 
 class DetailViewController: UIViewController {
@@ -249,7 +251,15 @@ extension DetailViewController: DetailViewControllerInterface {
     
     func updateFavoriteButton(isFavorited: Bool) {
             favoriteButton.isSelected = isFavorited
-        }
+    }
+    
+    func startActivityIndicator() {
+        ActivityIndicatorHelper.shared.start()
+    }
+    
+    func stopActivityIndicator() {
+        ActivityIndicatorHelper.shared.stop()
+    }
 
 }
 

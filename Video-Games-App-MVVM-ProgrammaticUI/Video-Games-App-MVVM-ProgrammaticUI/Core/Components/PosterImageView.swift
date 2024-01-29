@@ -46,7 +46,11 @@ final class PosterImageView: UIImageView {
                     self.activityIndicator.stopAnimating()
                     if let image = UIImage(data: data) {
                         let resizedImage = self.resizeImage(image: image, targetSize: CGSize(width: 960, height: 540))
-                        self.image = self.compressImage(image: resizedImage)
+                        //Swift With Vincent
+                        let compressedImage = self.compressImage(image: resizedImage)
+                        Task {
+                            self.image = await compressedImage?.byPreparingForDisplay()
+                        }
                     }
                 }
             case .failure(_):
@@ -66,7 +70,11 @@ final class PosterImageView: UIImageView {
                     self.activityIndicator.stopAnimating()
                     if let image = UIImage(data: data) {
                         let resizedImage = self.resizeImage(image: image, targetSize: CGSize(width: 960, height: 540))
-                        self.image = self.compressImage(image: resizedImage)
+                        //Swift With Vincent
+                        let compressedImage = self.compressImage(image: resizedImage)
+                        Task {
+                            self.image = await compressedImage?.byPreparingForDisplay()
+                        }
                     }
                 }
             case .failure(_):

@@ -42,6 +42,7 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
     }
     
     func viewWillAppear() {
+        view?.startActivityIndicator()
         refreshFavorites()
 //        FavoritesManager.shared.writeSql()
     }
@@ -49,6 +50,7 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
     func loadFavorites() {
         self.gameDetails.removeAll()
         let group = DispatchGroup()
+        var isErrorOccured = false
 
         for favoriteGame in favoritesManager.favoriteGames {
             group.enter()
@@ -57,14 +59,21 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
                 guard let self = self else { return }
                 if let returnedGameResult = returnedGameResult, !self.gameDetails.contains(where: { $0.id == returnedGameResult.id }) {
                     self.gameDetails.append(returnedGameResult)
+                } else {
+                    isErrorOccured = true
                 }
             }
         }
 
         // This block is executed when all asynchronous operations are completed
         group.notify(queue: .main) {
+            if isErrorOccured {
+                self.view?.stopActivityIndicator()
+                //TODO: ask for try again.
+            }
             self.gameDetails.sort { $0._id < $1._id }
             self.view?.reloadTableViewOnMain()
+            self.view?.stopActivityIndicator()
         }
     }
 
@@ -77,8 +86,9 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
             case .success(let data):
                 favoritesManager.favoriteGames = data
                 self.loadFavorites()
-                
             case .failure(let error):
+                //TODO: show alert and ask for try again
+                view?.stopActivityIndicator()
                 print("refreshFavoritesError: \(error.localizedDescription)")
             }
         }

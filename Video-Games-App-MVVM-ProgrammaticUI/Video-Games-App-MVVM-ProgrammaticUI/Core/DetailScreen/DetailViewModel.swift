@@ -47,6 +47,7 @@ final class DetailViewModel {
 
 extension DetailViewModel: DetailViewModelInterface {
     func viewDidLoad() {
+        view?.stopActivityIndicator()
         view?.configureVC()
         view?.configureCollectionView()
         view?.configurePageControl()
@@ -96,11 +97,13 @@ extension DetailViewModel: DetailViewModelInterface {
     
     func favoriteButtonTapped() {
         if isFavorite {
-            removeGameFromFavorites {
+            removeGameFromFavorites { [weak self] in
+                guard let self = self else { return }
                 self.view?.updateFavoriteButton(isFavorited: self.isFavorite)
             }
         } else {
-            addGameToFavorites {
+            addGameToFavorites { [weak self] in
+                guard let self = self else { return }
                 self.view?.updateFavoriteButton(isFavorited: self.isFavorite)
             }
         }

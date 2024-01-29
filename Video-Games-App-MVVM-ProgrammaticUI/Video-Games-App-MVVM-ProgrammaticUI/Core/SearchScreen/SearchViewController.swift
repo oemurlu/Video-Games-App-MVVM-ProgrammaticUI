@@ -14,6 +14,8 @@ protocol SearchViewControllerInterface: AnyObject {
     func reloadCollectionView()
     func scrollToTop()
     func navigateToDetailScreen(gameDetails: GameResult, gameScreenshots: GameScreenshots)
+    func startActivityIndicator()
+    func stopActivityIndicator()
 }
 
 final class SearchViewController: UIViewController {
@@ -90,7 +92,9 @@ extension SearchViewController: SearchViewControllerInterface {
     
     func scrollToTop() {
         DispatchQueue.main.async {
-            self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+            if !self.viewModel.games.isEmpty {
+                self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+            }
         }
     }
     
@@ -99,6 +103,14 @@ extension SearchViewController: SearchViewControllerInterface {
             let detailScreen = DetailViewController(gameDetails: gameDetails, gameScreenshots: gameScreenshots)
             self.navigationController?.pushViewController(detailScreen, animated: true)
         }
+    }
+    
+    func startActivityIndicator() {
+        ActivityIndicatorHelper.shared.start()
+    }
+    
+    func stopActivityIndicator() {
+        ActivityIndicatorHelper.shared.stop()
     }
 }
 
