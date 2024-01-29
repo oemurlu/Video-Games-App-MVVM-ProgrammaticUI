@@ -44,7 +44,10 @@ final class PosterImageView: UIImageView {
             case .success(let data):
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
-                    self.image = UIImage(data: data)
+                    if let image = UIImage(data: data) {
+                        let resizedImage = self.resizeImage(image: image, targetSize: CGSize(width: 960, height: 540))
+                        self.image = self.compressImage(image: resizedImage)
+                    }
                 }
             case .failure(_):
                 break
@@ -61,7 +64,10 @@ final class PosterImageView: UIImageView {
             case .success(let data):
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
-                    self.image = UIImage(data: data)
+                    if let image = UIImage(data: data) {
+                        let resizedImage = self.resizeImage(image: image, targetSize: CGSize(width: 960, height: 540))
+                        self.image = self.compressImage(image: resizedImage)
+                    }
                 }
             case .failure(_):
                 break
@@ -73,4 +79,33 @@ final class PosterImageView: UIImageView {
         dataTask?.cancel()
         dataTask = nil
     }
+    
+    private func compressImage(image: UIImage) -> UIImage? {
+        guard let compressedData = image.jpegData(compressionQuality: 0.5) else { return nil }
+        return UIImage(data: compressedData)
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage!
+    }
+
 }
