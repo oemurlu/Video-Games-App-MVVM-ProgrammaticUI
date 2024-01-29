@@ -36,7 +36,6 @@ final class SearchCell: UICollectionViewCell {
     private func configureCell() {
         layer.cornerRadius = 16
         clipsToBounds = true
-        backgroundColor = .red
     }
     
     private func configurePosterImageView() {
@@ -45,6 +44,5 @@ final class SearchCell: UICollectionViewCell {
         posterImageView.translatesAutoresizingMaskIntoConstraints = false
         
         posterImageView.pinToEdgesOf(view: self)
-        posterImageView.backgroundColor = .green
     }
 }

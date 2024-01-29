@@ -61,7 +61,7 @@ class FavoriteCell: UITableViewCell {
     private func configureSubView() {
         subView.layer.cornerRadius = 8
         subView.clipsToBounds = true
-        subView.backgroundColor = .systemGray4
+        subView.backgroundColor = .systemGray5
     }
     
     private func configureCell() {

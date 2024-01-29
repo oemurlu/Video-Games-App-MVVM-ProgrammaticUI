@@ -61,7 +61,8 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
             }
         }
 
-        group.notify(queue: .main) { // Tüm asenkron işlemler tamamlandığında bu blok çalışır
+        // This block is executed when all asynchronous operations are completed
+        group.notify(queue: .main) {
             self.gameDetails.sort { $0._id < $1._id }
             self.view?.reloadTableViewOnMain()
         }
