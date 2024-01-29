@@ -73,7 +73,7 @@ extension FavoritesViewController: FavoritesViewControllerInterface {
     
     func deleteTableRowWithAnimation(indexPath: IndexPath) {
         DispatchQueue.main.async {
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            self.tableView.deleteRows(at: [indexPath], with: .left)
         }
     }
     
@@ -90,8 +90,6 @@ extension FavoritesViewController: FavoritesViewControllerInterface {
             completion()
         }
     }
-
-
 }
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
@@ -101,6 +99,7 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteCell.reuseID, for: indexPath) as! FavoriteCell
+        cell.delegate = self
         cell.setCell(game: viewModel.gameDetails[indexPath.row])
         return cell
     }
@@ -121,6 +120,11 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
-    
-    
+}
+
+extension FavoritesViewController: FavoriteCellDelegate {
+    func cellRequestDelete(cell: FavoriteCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        self.viewModel.deleteFromFavorites(indexPath: indexPath)
+    }
 }

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FavoriteCellDelegate: AnyObject {
+    func cellRequestDelete(cell: FavoriteCell)
+}
+
 class FavoriteCell: UITableViewCell {
     
     static let reuseID = "FavoriteCell"
@@ -15,7 +19,9 @@ class FavoriteCell: UITableViewCell {
     private var nameLabel: UILabel!
     private var releaseLabel: UILabel!
     private var ratingLabel: UILabel!
+    private var deleteButton: UIButton!
     
+    weak var delegate: FavoriteCellDelegate?
     private let padding: CGFloat = 16
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -37,6 +43,7 @@ class FavoriteCell: UITableViewCell {
         configureNameLabel()
         configureReleaseLabel()
         configureRatingLabel()
+        configureDeleteButton()
     }
     
     required init?(coder: NSCoder) {
@@ -129,5 +136,25 @@ class FavoriteCell: UITableViewCell {
             ratingLabel.leadingAnchor.constraint(equalTo: releaseLabel.leadingAnchor),
             ratingLabel.trailingAnchor.constraint(equalTo: releaseLabel.trailingAnchor)
         ])
+    }
+    
+    private func configureDeleteButton() {
+        deleteButton = UIButton(frame: .zero)
+        subView.addSubview(deleteButton)
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 28, weight: .regular, scale: .large)
+        let largeTrash = UIImage(systemName: "trash.circle", withConfiguration: largeConfig)?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        deleteButton.setImage(largeTrash, for: .normal)
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        
+        NSLayoutConstraint.activate([
+            deleteButton.bottomAnchor.constraint(equalTo: posterImageView.bottomAnchor),
+            deleteButton.trailingAnchor.constraint(equalTo: subView.trailingAnchor, constant: -padding)
+        ])
+    }
+    
+    @objc func deleteButtonTapped() {
+        delegate?.cellRequestDelete(cell: self)
     }
 }
