@@ -15,6 +15,7 @@ protocol FavoritesViewModelInterface {
     func refreshFavorites()
     func deleteFromFavorites(indexPath: IndexPath)
     func showTryAgainAlert()
+    func getDetail(id: Int)
 }
 
 final class FavoritesViewModel {
@@ -118,4 +119,18 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
             self.refreshFavorites()
         }
     }
+    
+    func getDetail(id: Int) {
+        view?.startActivityIndicator()
+        service.downloadGameDetailsAndScreenshots(id: id) { [weak self] (returnedDetails, returnedScreenshots) in
+            guard let self = self else { return }
+            guard let details = returnedDetails, let screenshots = returnedScreenshots else {
+                view?.stopActivityIndicator()
+                return
+            }
+            
+            self.view?.navigateToDetailScreen(gameDetails: details, gameScreenshots: screenshots)
+        }
+    }
+
 }

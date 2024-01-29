@@ -18,6 +18,7 @@ protocol HomeViewControllerInterface: AnyObject {
     func stopActivityIndicator()
     func showTryAgainAlert(completion: @escaping () -> ())
     func presentAlert(completion: @escaping () -> ())
+    func changeTitle(title: String)
 }
 
 class HomeViewController: UIViewController {
@@ -51,7 +52,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: HomeViewControllerInterface {
     func configureVC() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor(named: "background")
         self.title = "Popular Games"
         
         rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .done, target: self, action: #selector(rightBarButton_TUI))
@@ -69,6 +70,8 @@ extension HomeViewController: HomeViewControllerInterface {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        collectionView.backgroundColor = .clear
         
         collectionView.register(GameCell.self, forCellWithReuseIdentifier: GameCell.reuseID)
         
@@ -141,6 +144,10 @@ extension HomeViewController: HomeViewControllerInterface {
             completion()
         }
     }
+    
+    func changeTitle(title: String) {
+        self.title = title
+    }
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -177,8 +184,9 @@ extension HomeViewController: UIPopoverPresentationControllerDelegate {
 }
 
 extension HomeViewController: FilterPopOverDelegate {
-    func filterCellDidSelect(filterBy: FilterBy) {        
+    func filterCellDidSelect(filterBy: FilterBy) {  
         viewModel.filterSelected(filter: filterBy)
+        viewModel.changeFilterName(filter: filterBy)
     }
 }
     

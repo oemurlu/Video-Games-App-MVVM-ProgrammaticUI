@@ -15,6 +15,7 @@ protocol FavoritesViewControllerInterface: AnyObject {
     func startActivityIndicator()
     func stopActivityIndicator()
     func showTryAgainAlert(completion: @escaping () -> ())
+    func navigateToDetailScreen(gameDetails: GameResult, gameScreenshots: GameScreenshots)
 }
 
 class FavoritesViewController: UIViewController {
@@ -90,6 +91,13 @@ extension FavoritesViewController: FavoritesViewControllerInterface {
             completion()
         }
     }
+    
+    func navigateToDetailScreen(gameDetails: GameResult, gameScreenshots: GameScreenshots) {
+        DispatchQueue.main.async {
+            let detailScreen = DetailViewController(gameDetails: gameDetails, gameScreenshots: gameScreenshots)
+            self.navigationController?.pushViewController(detailScreen, animated: true)
+        }
+    }
 }
 
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
@@ -102,6 +110,11 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         cell.delegate = self
         cell.setCell(game: viewModel.gameDetails[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let gameId = viewModel.gameDetails[indexPath.row]._id
+        viewModel.getDetail(id: gameId)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

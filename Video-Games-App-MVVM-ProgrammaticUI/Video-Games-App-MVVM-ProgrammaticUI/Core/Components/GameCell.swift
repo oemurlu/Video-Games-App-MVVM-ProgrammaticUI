@@ -38,7 +38,7 @@ final class GameCell: UICollectionViewCell {
     private func configureCell() {
         layer.cornerRadius = 16
         clipsToBounds = true
-        backgroundColor = .systemGray6
+        backgroundColor = UIColor(named: "background-cell")
     }
     
     func setCell(game: GameResult) {

@@ -15,6 +15,7 @@ protocol HomeViewModelInterface {
     func filterSelected(filter: FilterBy)
     func getDetail(id: Int)
     func showTryAgainAlert(filter: FilterBy)
+    func changeFilterName(filter: FilterBy)
 }
 
 final class HomeViewModel {
@@ -92,6 +93,17 @@ extension HomeViewModel: HomeViewModelInterface {
         }
     }
     
+    func changeFilterName(filter: FilterBy) {
+        switch filter {
+        case .popular:
+            view?.changeTitle(title: "Popular Games")
+        case .feed:
+            view?.changeTitle(title: "Feed")
+        case .topRated:
+            view?.changeTitle(title: "Top Rated Games")
+        }
+    }
+    
     func getDetail(id: Int) {
         view?.startActivityIndicator()
         service.downloadGameDetailsAndScreenshots(id: id) { [weak self] (returnedDetails, returnedScreenshots) in
@@ -102,7 +114,6 @@ extension HomeViewModel: HomeViewModelInterface {
             }
             
             self.view?.navigateToDetailScreen(gameDetails: details, gameScreenshots: screenshots)
-            
         }
     }
     

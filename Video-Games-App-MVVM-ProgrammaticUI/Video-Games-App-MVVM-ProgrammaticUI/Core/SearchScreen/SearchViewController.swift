@@ -50,6 +50,7 @@ final class SearchViewController: UIViewController {
 
 extension SearchViewController: SearchViewControllerInterface {
     func configureVC() {
+        view.backgroundColor = UIColor(named: "background")
         self.title = "Search Games"
     }
     
@@ -73,6 +74,8 @@ extension SearchViewController: SearchViewControllerInterface {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: UIHelper.createSearchFlowLayout())
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        collectionView.backgroundColor = UIColor(named: "black-white")
         
         collectionView.dataSource = self
         collectionView.delegate = self

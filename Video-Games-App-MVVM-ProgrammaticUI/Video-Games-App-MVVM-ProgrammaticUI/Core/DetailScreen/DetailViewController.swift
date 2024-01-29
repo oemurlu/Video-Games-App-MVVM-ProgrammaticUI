@@ -65,7 +65,7 @@ class DetailViewController: UIViewController {
 
 extension DetailViewController: DetailViewControllerInterface {
     func configureVC() {
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = UIColor(named: "background-cell")
     }
     
     func configureCollectionView() {
@@ -230,7 +230,7 @@ extension DetailViewController: DetailViewControllerInterface {
         overviewTextView.translatesAutoresizingMaskIntoConstraints = false
         
         overviewTextView.font = .systemFont(ofSize: 16)
-        overviewTextView.backgroundColor = .systemGray6
+        overviewTextView.backgroundColor = UIColor(named: "background-cell")
         overviewTextView.isEditable = false
         overviewTextView.isScrollEnabled = true
         overviewTextView.textAlignment = .justified
