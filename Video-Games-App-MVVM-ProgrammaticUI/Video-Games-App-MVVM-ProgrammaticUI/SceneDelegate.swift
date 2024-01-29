@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let homeVC = HomeViewController()
         let homeNavController = UINavigationController(rootViewController: homeVC)
-        homeNavController.tabBarItem = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
+        homeNavController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
         let searchVC = SearchViewController()
         let searchNavCongroller = UINavigationController(rootViewController: searchVC)

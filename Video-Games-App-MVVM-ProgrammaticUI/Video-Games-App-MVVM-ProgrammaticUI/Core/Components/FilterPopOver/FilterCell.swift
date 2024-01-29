@@ -22,7 +22,6 @@ final class FilterCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-        print("setSelected")
     }
     
     func configureCell(text: String) {

@@ -53,7 +53,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: HomeViewControllerInterface {
     func configureVC() {
         view.backgroundColor = UIColor(named: "background")
-        self.title = "Popular Games"
+        navigationItem.title = "Popular Games"
         
         rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal"), style: .done, target: self, action: #selector(rightBarButton_TUI))
         rightBarButtonItem.tintColor = .white
@@ -146,7 +146,7 @@ extension HomeViewController: HomeViewControllerInterface {
     }
     
     func changeTitle(title: String) {
-        self.title = title
+        navigationItem.title = title
     }
 }
 
