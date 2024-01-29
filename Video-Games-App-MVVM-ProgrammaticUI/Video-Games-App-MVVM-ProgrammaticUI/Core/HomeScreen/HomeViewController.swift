@@ -16,6 +16,8 @@ protocol HomeViewControllerInterface: AnyObject {
     func navigateToDetailScreen(gameDetails: GameResult, gameScreenshots: GameScreenshots)
     func startActivityIndicator()
     func stopActivityIndicator()
+    func showTryAgainAlert(completion: @escaping () -> ())
+    func presentAlert(completion: @escaping () -> ())
 }
 
 class HomeViewController: UIViewController {
@@ -121,6 +123,23 @@ extension HomeViewController: HomeViewControllerInterface {
     
     func stopActivityIndicator() {
         ActivityIndicatorHelper.shared.stop()
+    }
+    
+    func showTryAgainAlert(completion: @escaping () -> ()) {
+        DispatchQueue.main.async {
+            if self.presentedViewController != nil {
+                self.dismiss(animated: true)
+                self.presentAlert(completion: completion)
+            } else {
+                self.presentAlert(completion: completion)
+            }
+        }
+    }
+    
+    func presentAlert(completion: @escaping () -> ()) {
+        MakeAlert.shared.alertMessageWithHandler(vc: self) {
+            completion()
+        }
     }
 }
 

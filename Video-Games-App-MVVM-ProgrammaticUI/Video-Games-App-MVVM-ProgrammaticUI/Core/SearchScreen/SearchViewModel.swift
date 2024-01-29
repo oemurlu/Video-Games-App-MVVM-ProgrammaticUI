@@ -12,6 +12,7 @@ protocol SearchViewModelInterface {
     func viewDidLoad()
     func searchGames(name: String)
     func getDetail(id: Int)
+    func showTryAgainAlert()
 }
 
 final class SearchViewModel {
@@ -76,8 +77,7 @@ extension SearchViewModel: SearchViewModelInterface {
             guard let self = self else { return }
             guard let searchResponse = searchResponse else {
                 view?.stopActivityIndicator()
-                print("yeniden denensin mi?")
-                //TODO: show alert and ask try again for request
+                self.showTryAgainAlert()
                 return
             }
             
@@ -104,11 +104,18 @@ extension SearchViewModel: SearchViewModelInterface {
             guard let self = self else { return }
             guard let details = returnedDetails, let screenshots = returnedScreenshots else {
                 view?.stopActivityIndicator()
-                print("yeniden navigate denensin mi?")
+                self.showTryAgainAlert()
                 return
             }
             
             self.view?.navigateToDetailScreen(gameDetails: details, gameScreenshots: screenshots)
+        }
+    }
+    
+    func showTryAgainAlert() {
+        view?.showTryAgainAlert { [weak self] in
+            guard let self = self else { return }
+            self.updateSearchResults(for: self.searchText)
         }
     }
 }

@@ -14,6 +14,7 @@ protocol FavoritesViewControllerInterface: AnyObject {
     func deleteTableRowWithAnimation(indexPath: IndexPath)
     func startActivityIndicator()
     func stopActivityIndicator()
+    func showTryAgainAlert(completion: @escaping () -> ())
 }
 
 class FavoritesViewController: UIViewController {
@@ -83,6 +84,13 @@ extension FavoritesViewController: FavoritesViewControllerInterface {
     func stopActivityIndicator() {
         ActivityIndicatorHelper.shared.stop()
     }
+    
+    func showTryAgainAlert(completion: @escaping () -> ()) {
+        MakeAlert.shared.alertMessageWithHandler(vc: self) {
+            completion()
+        }
+    }
+
 
 }
 

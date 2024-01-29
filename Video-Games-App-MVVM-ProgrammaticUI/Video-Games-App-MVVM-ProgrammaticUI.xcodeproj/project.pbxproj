@@ -42,6 +42,7 @@
 		B6F355772B64FC7F00D8AF39 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355762B64FC7F00D8AF39 /* UITableView+Extension.swift */; };
 		B6F355792B66A00E00D8AF39 /* ModelContext+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355782B66A00E00D8AF39 /* ModelContext+Extension.swift */; };
 		B6F3557B2B6780F900D8AF39 /* ActivityIndicatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3557A2B6780F900D8AF39 /* ActivityIndicatorHelper.swift */; };
+		B6F3557D2B67A2D400D8AF39 /* MakeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3557C2B67A2D400D8AF39 /* MakeAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		B6F355762B64FC7F00D8AF39 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		B6F355782B66A00E00D8AF39 /* ModelContext+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelContext+Extension.swift"; sourceTree = "<group>"; };
 		B6F3557A2B6780F900D8AF39 /* ActivityIndicatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorHelper.swift; sourceTree = "<group>"; };
+		B6F3557C2B67A2D400D8AF39 /* MakeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeAlert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				B609EA132B5D34FE00EDFA92 /* APIURLs.swift */,
 				B609EA202B5D49ED00EDFA92 /* UIHelper.swift */,
 				B6F3557A2B6780F900D8AF39 /* ActivityIndicatorHelper.swift */,
+				B6F3557C2B67A2D400D8AF39 /* MakeAlert.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 			files = (
 				B6F355682B637F7500D8AF39 /* FavoritesViewController.swift in Sources */,
 				B6F355752B63DB8800D8AF39 /* FavoritesManager.swift in Sources */,
+				B6F3557D2B67A2D400D8AF39 /* MakeAlert.swift in Sources */,
 				B609EA102B5D32EA00EDFA92 /* NetworkManager.swift in Sources */,
 				B609E9F72B5D25F300EDFA92 /* AppDelegate.swift in Sources */,
 				B65210102B5E34E100C288B3 /* FilterPopOverViewController.swift in Sources */,

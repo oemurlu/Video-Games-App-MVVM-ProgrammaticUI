@@ -14,6 +14,7 @@ protocol HomeViewModelInterface {
     func showPopOverFilter()
     func filterSelected(filter: FilterBy)
     func getDetail(id: Int)
+    func showTryAgainAlert(filter: FilterBy)
 }
 
 final class HomeViewModel {
@@ -55,6 +56,8 @@ extension HomeViewModel: HomeViewModelInterface {
             guard let gameResponse = gameResponse else {
                 self.view?.stopActivityIndicator()
                 //TODO: show alert and ask try again for request
+                self.showTryAgainAlert(filter: filter)
+                print("qwe")
                 return
             }
             
@@ -95,12 +98,19 @@ extension HomeViewModel: HomeViewModelInterface {
             guard let self = self else { return }
             guard let details = returnedDetails, let screenshots = returnedScreenshots else {
                 view?.stopActivityIndicator()
-                print("yeniden navigate denensin mi?")
                 return
             }
             
             self.view?.navigateToDetailScreen(gameDetails: details, gameScreenshots: screenshots)
             
+        }
+    }
+    
+    func showTryAgainAlert(filter: FilterBy) {
+        print("show alert vm")
+        view?.showTryAgainAlert { [weak self] in
+            guard let self = self else { return }
+            self.getGames(filter: filter)
         }
     }
 }

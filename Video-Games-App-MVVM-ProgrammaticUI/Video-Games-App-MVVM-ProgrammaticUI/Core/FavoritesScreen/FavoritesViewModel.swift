@@ -14,6 +14,7 @@ protocol FavoritesViewModelInterface {
     func loadFavorites()
     func refreshFavorites()
     func deleteFromFavorites(indexPath: IndexPath)
+    func showTryAgainAlert()
 }
 
 final class FavoritesViewModel {
@@ -44,14 +45,14 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
     func viewWillAppear() {
         view?.startActivityIndicator()
         refreshFavorites()
-//        FavoritesManager.shared.writeSql()
+        //        FavoritesManager.shared.writeSql()
     }
     
     func loadFavorites() {
         self.gameDetails.removeAll()
         let group = DispatchGroup()
         var isErrorOccured = false
-
+        
         for favoriteGame in favoritesManager.favoriteGames {
             group.enter()
             service.downloadGameDetails(id: favoriteGame.id) { [weak self] returnedGameResult in
@@ -64,19 +65,19 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
                 }
             }
         }
-
+        
         // This block is executed when all asynchronous operations are completed
         group.notify(queue: .main) {
             if isErrorOccured {
                 self.view?.stopActivityIndicator()
-                //TODO: ask for try again.
+                self.showTryAgainAlert()
             }
             self.gameDetails.sort { $0._id < $1._id }
             self.view?.reloadTableViewOnMain()
             self.view?.stopActivityIndicator()
         }
     }
-
+    
     
     func refreshFavorites() {
         favoritesManager.getFavoriteGameIDs { [weak self] result in
@@ -87,20 +88,20 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
                 favoritesManager.favoriteGames = data
                 self.loadFavorites()
             case .failure(let error):
-                //TODO: show alert and ask for try again
-                view?.stopActivityIndicator()
                 print("refreshFavoritesError: \(error.localizedDescription)")
+                view?.stopActivityIndicator()
+                self.showTryAgainAlert()
             }
         }
     }
-
+    
     func deleteFromFavorites(indexPath: IndexPath) {
         guard indexPath.row < FavoritesManager.shared.favoriteGames.count else { return }
         let toBeDeletedGame = FavoritesManager.shared.favoriteGames[indexPath.row]
         
         favoritesManager.removeFavorite(game: toBeDeletedGame) { [weak self] in
             guard let self = self else { return }
-        
+            
             favoritesManager.favoriteGames.remove(at: indexPath.row)
             
             if let indexInGameDetails = self.gameDetails.firstIndex(where: { $0.id == toBeDeletedGame.id }) {
@@ -108,6 +109,13 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
             }
             
             self.view?.deleteTableRowWithAnimation(indexPath: indexPath)
+        }
+    }
+    
+    func showTryAgainAlert() {
+        view?.showTryAgainAlert { [weak self] in
+            guard let self = self else { return }
+            self.refreshFavorites()
         }
     }
 }

@@ -16,6 +16,7 @@ protocol SearchViewControllerInterface: AnyObject {
     func navigateToDetailScreen(gameDetails: GameResult, gameScreenshots: GameScreenshots)
     func startActivityIndicator()
     func stopActivityIndicator()
+    func showTryAgainAlert(completion: @escaping () -> ())
 }
 
 final class SearchViewController: UIViewController {
@@ -137,6 +138,12 @@ extension SearchViewController: UICollectionViewDataSource, UICollectionViewDele
         
         if offsetY >= contentHeight - (3 * height) {
             viewModel.searchGames(name: viewModel.searchText)
+        }
+    }
+    
+    func showTryAgainAlert(completion: @escaping () -> ()) {
+        MakeAlert.shared.alertMessageWithHandler(vc: self) {
+            completion()
         }
     }
 }
