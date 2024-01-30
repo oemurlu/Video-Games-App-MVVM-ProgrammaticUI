@@ -10,6 +10,7 @@ import Foundation
 protocol DetailViewModelInterface {
     var view: DetailViewControllerInterface? { get set }
     func viewDidLoad()
+    func viewWillAppear()
     func handleGameScreenshots(games: GameScreenshots)
     func updateCurrentPageIndex(_ index: Int)
     func addGameToFavorites(completion: @escaping () -> Void)
@@ -61,6 +62,10 @@ extension DetailViewModel: DetailViewModelInterface {
         view?.configureOverviewTextView()
     }
     
+    func viewWillAppear() {
+        checkIfGameIsFavorite()
+    }
+    
     func handleGameScreenshots(games: GameScreenshots) {
         if let games = games.results {
             gameScreenshots = games
@@ -81,18 +86,21 @@ extension DetailViewModel: DetailViewModelInterface {
     }
     func removeGameFromFavorites(completion: @escaping () -> Void) {
         guard let gameId = gameDetails.id else { return }
-        guard let gameToRemove = favoriteManager.favoriteGames.first(where: { $0.id == gameId }) else { return }
-        favoriteManager.removeFavorite(game: gameToRemove) { [weak self] in
-                guard let self = self else { return }
-                self.isFavorite = false
-                completion()
+        guard let gameToRemoveId = favoriteManager.favoriteGames.first(where: { $0 == gameId }) else { return }
+        favoriteManager.removeFavorite(gameId: gameToRemoveId) { [weak self] in
+            guard let self = self else { return }
+            checkIfGameIsFavorite()
+            completion()
             }
     }
     
     func checkIfGameIsFavorite() {
         guard let gameId = gameDetails.id else { return }
-        isFavorite = favoriteManager.favoriteGames.contains(where: { $0.id == gameId })
-        view?.updateFavoriteButton(isFavorited: isFavorite)
+        favoriteManager.isFavorite(gameId: gameId) { [weak self] isFavorite in
+            guard let self = self else { return }
+            self.view?.updateFavoriteButton(isFavorited: isFavorite)
+            self.isFavorite = isFavorite
+        }
     }
     
     func favoriteButtonTapped() {

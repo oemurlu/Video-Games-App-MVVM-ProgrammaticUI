@@ -5,75 +5,76 @@
 //  Created by Osman Emre Ömürlü on 26.01.2024.
 //
 
-import Foundation
-import SwiftData
+import UIKit
+import CoreData
 
 class FavoritesManager {
     static let shared = FavoritesManager()
-    var container: ModelContainer?
-    var context: ModelContext?
-    var favoriteGames: [FavoriteGame] = []
+    var favoriteGames: [Int] = []
     
     init() {
-        do {
-            container = try ModelContainer(for: FavoriteGame.self)
-            if let container {
-                context = ModelContext(container)
-            }
-            guard let appSupportDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).last else { return }
-            print(appSupportDir)
-        } catch {
-            print("FavoritesManager init error: \(error.localizedDescription)")
-        }
+        updateFavoriteGames()
+    }
+    
+    func getContext() -> NSManagedObjectContext {
+        return (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    }
+    
+    func saveContext() {
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
     }
     
     func addFavorite(gameId: Int, completion: @escaping () -> ()) {
-        isFavorite(gameId: gameId) { isFavorited in
+        isFavorite(gameId: gameId) { [weak self] isFavorited in
+            guard let self = self else { return }
             if !isFavorited {
                 // if the gameId is not in the database, then add it.
-                if let context = self.context {
-                    let idToBeSaved = FavoriteGame(id: gameId)
-                    context.insert(idToBeSaved)
-                    completion()
-                }
+                let context = self.getContext()
+                guard let entity = NSEntityDescription.entity(forEntityName: "Yapilacak", in: context) else { return }
+                
+                let newObj = NSManagedObject(entity: entity, insertInto: context)
+                
+                newObj.setValue(gameId, forKey: "id")
+                newObj.setValue(Date(), forKey: "dateAdded")
+                self.saveContext()
+                self.updateFavoriteGames()
+                completion()
             }
         }
     }
     
-    func removeFavorite(game: FavoriteGame, completion: () -> ()) {
-        if let context {
-            context.delete(game)
-            completion()
+    func updateFavoriteGames() {
+        if let fetchedGames = getFavoriteGameIDs() {
+            favoriteGames = fetchedGames.map { Int($0.id) }
         }
+    }
+    
+    func getFavoriteGameIDs() -> [Yapilacak]? {
+        let fetchRequest: NSFetchRequest<Yapilacak> = Yapilacak.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateAdded", ascending: false)]
+        do {
+            return try getContext().fetch(fetchRequest)
+        } catch {
+            print("getFavGameIds: \(error)")
+        }
+        return nil
+    }
+    
+    func removeFavorite(gameId: Int, completion: @escaping () -> ()) {
+        let context = getContext()
+        if let fetchedGames = getFavoriteGameIDs() {
+            for game in fetchedGames where game.id == gameId {
+                context.delete(game)
+            }
+        }
+        saveContext()
+        updateFavoriteGames()
+        completion()
     }
     
     func isFavorite(gameId: Int, completion: @escaping (Bool) -> ()) {
-        getFavoriteGameIDs { result in
-            switch result {
-            case .success(let favoriteGames):
-                let isFavorited = favoriteGames.contains(where: { $0.id == gameId })
-                completion(isFavorited)
-            case .failure(let error):
-                print("Error checking if game is favorite: \(error)")
-                completion(false)
-            }
-        }
-    }
-    
-    func getFavoriteGameIDs(completion: @escaping (Result<[FavoriteGame], Error>) -> ()) {
-        let descriptor = FetchDescriptor<FavoriteGame>(sortBy: [SortDescriptor<FavoriteGame>(\.id)])
-        if let context {
-            do {
-                let data = try context.fetch(descriptor)
-                completion(.success(data))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func printSqlLocation() {
-        print(context?.sqliteCommand as Any)
+        completion(favoriteGames.contains(gameId))
+        
     }
 }
 

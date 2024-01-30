@@ -53,65 +53,57 @@ extension FavoritesViewModel: FavoritesViewModelInterface {
         self.gameDetails.removeAll()
         let group = DispatchGroup()
         var isErrorOccured = false
-        
+        var tempGameDetails = [Int: GameResult]()
+
         for favoriteGame in favoritesManager.favoriteGames {
             group.enter()
-            service.downloadGameDetails(id: favoriteGame.id) { [weak self] returnedGameResult in
+            service.downloadGameDetails(id: favoriteGame) { returnedGameResult in
                 group.leave()
-                guard let self = self else { return }
-                if let returnedGameResult = returnedGameResult, !self.gameDetails.contains(where: { $0.id == returnedGameResult.id }) {
-                    self.gameDetails.append(returnedGameResult)
+                if let gameResult = returnedGameResult {
+                    tempGameDetails[favoriteGame] = gameResult
                 } else {
                     isErrorOccured = true
                 }
             }
         }
-        
-        // This block is executed when all asynchronous operations are completed
-        group.notify(queue: .main) {
+
+        group.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
             if isErrorOccured {
                 self.view?.stopActivityIndicator()
                 self.showTryAgainAlert()
+                return
             }
-            self.gameDetails.sort { $0._id < $1._id }
+            // gameDetails arrayini favoriteGames arrayi ile ayni sirada doldur
+            self.gameDetails = self.favoritesManager.favoriteGames.compactMap { tempGameDetails[$0] }
             self.view?.reloadTableViewOnMain()
             self.view?.stopActivityIndicator()
         }
     }
-    
-    
+
     func refreshFavorites() {
-        favoritesManager.getFavoriteGameIDs { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let data):
-                favoritesManager.favoriteGames = data
-                self.loadFavorites()
-            case .failure(let error):
-                print("refreshFavoritesError: \(error.localizedDescription)")
-                view?.stopActivityIndicator()
-                self.showTryAgainAlert()
-            }
-        }
+        favoritesManager.updateFavoriteGames()
+        loadFavorites()
     }
+
     
     func deleteFromFavorites(indexPath: IndexPath) {
-        guard indexPath.row < FavoritesManager.shared.favoriteGames.count else { return }
-        let toBeDeletedGame = FavoritesManager.shared.favoriteGames[indexPath.row]
+        guard indexPath.row < favoritesManager.favoriteGames.count else { return }
+        let toBeDeletedGameId = favoritesManager.favoriteGames[indexPath.row]
         
-        favoritesManager.removeFavorite(game: toBeDeletedGame) { [weak self] in
-            guard let self = self else { return }
-            
-            favoritesManager.favoriteGames.remove(at: indexPath.row)
-            
-            if let indexInGameDetails = self.gameDetails.firstIndex(where: { $0.id == toBeDeletedGame.id }) {
-                self.gameDetails.remove(at: indexInGameDetails)
-            }
-            
-            self.view?.deleteTableRowWithAnimation(indexPath: indexPath)
+        // Önce dizilerden sil
+        favoritesManager.favoriteGames.remove(at: indexPath.row)
+        if let indexInGameDetails = self.gameDetails.firstIndex(where: { $0.id == toBeDeletedGameId }) {
+            self.gameDetails.remove(at: indexInGameDetails)
+        }
+        self.view?.deleteTableRowWithAnimation(indexPath: indexPath)
+
+        // Sonra CoreData'dan sil
+        favoritesManager.removeFavorite(gameId: toBeDeletedGameId) {
+            // Burada ekstra bir işlem yapmanız gerekebilir.
         }
     }
+
     
     func showTryAgainAlert() {
         view?.showTryAgainAlert { [weak self] in

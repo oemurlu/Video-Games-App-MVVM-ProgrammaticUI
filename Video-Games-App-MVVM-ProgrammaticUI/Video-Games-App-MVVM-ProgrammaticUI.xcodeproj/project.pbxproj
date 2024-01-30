@@ -37,12 +37,12 @@
 		B6F355682B637F7500D8AF39 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355672B637F7500D8AF39 /* FavoritesViewController.swift */; };
 		B6F3556A2B637F8400D8AF39 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355692B637F8400D8AF39 /* FavoritesViewModel.swift */; };
 		B6F3556E2B63855B00D8AF39 /* FavoriteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3556D2B63855B00D8AF39 /* FavoriteCell.swift */; };
-		B6F355732B63DB7300D8AF39 /* FavoriteGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355722B63DB7300D8AF39 /* FavoriteGame.swift */; };
 		B6F355752B63DB8800D8AF39 /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355742B63DB8800D8AF39 /* FavoritesManager.swift */; };
 		B6F355772B64FC7F00D8AF39 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355762B64FC7F00D8AF39 /* UITableView+Extension.swift */; };
 		B6F355792B66A00E00D8AF39 /* ModelContext+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F355782B66A00E00D8AF39 /* ModelContext+Extension.swift */; };
 		B6F3557B2B6780F900D8AF39 /* ActivityIndicatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3557A2B6780F900D8AF39 /* ActivityIndicatorHelper.swift */; };
 		B6F3557D2B67A2D400D8AF39 /* MakeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F3557C2B67A2D400D8AF39 /* MakeAlert.swift */; };
+		B6F355822B68C16B00D8AF39 /* Favorites.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B6F355802B68C16B00D8AF39 /* Favorites.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,12 +78,12 @@
 		B6F355672B637F7500D8AF39 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		B6F355692B637F8400D8AF39 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		B6F3556D2B63855B00D8AF39 /* FavoriteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCell.swift; sourceTree = "<group>"; };
-		B6F355722B63DB7300D8AF39 /* FavoriteGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteGame.swift; sourceTree = "<group>"; };
 		B6F355742B63DB8800D8AF39 /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
 		B6F355762B64FC7F00D8AF39 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		B6F355782B66A00E00D8AF39 /* ModelContext+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelContext+Extension.swift"; sourceTree = "<group>"; };
 		B6F3557A2B6780F900D8AF39 /* ActivityIndicatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorHelper.swift; sourceTree = "<group>"; };
 		B6F3557C2B67A2D400D8AF39 /* MakeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeAlert.swift; sourceTree = "<group>"; };
+		B6F355812B68C16B00D8AF39 /* Favorites.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Favorites.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,7 +256,7 @@
 		B6F355702B63DB5500D8AF39 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B6F355722B63DB7300D8AF39 /* FavoriteGame.swift */,
+				B6F355802B68C16B00D8AF39 /* Favorites.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -355,7 +355,7 @@
 				B6F355602B62302B00D8AF39 /* GameScreenshots.swift in Sources */,
 				B609EA1A2B5D38AE00EDFA92 /* Game.swift in Sources */,
 				B6F3555E2B619B2400D8AF39 /* DetailViewModel.swift in Sources */,
-				B6F355732B63DB7300D8AF39 /* FavoriteGame.swift in Sources */,
+				B6F355822B68C16B00D8AF39 /* Favorites.xcdatamodeld in Sources */,
 				B6F355592B615D7C00D8AF39 /* UIViewController+Extension.swift in Sources */,
 				B609EA1C2B5D402A00EDFA92 /* HomeViewModel.swift in Sources */,
 				B609EA242B5D4A5000EDFA92 /* CGFloat+Extension.swift in Sources */,
@@ -587,6 +587,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B6F355802B68C16B00D8AF39 /* Favorites.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B6F355812B68C16B00D8AF39 /* Favorites.xcdatamodel */,
+			);
+			currentVersion = B6F355812B68C16B00D8AF39 /* Favorites.xcdatamodel */;
+			path = Favorites.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B609E9EB2B5D25F300EDFA92 /* Project object */;
 }

@@ -61,6 +61,12 @@ class DetailViewController: UIViewController {
         viewModel.viewDidLoad()
         viewModel.checkIfGameIsFavorite()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.viewWillAppear()
+    }
 }
 
 extension DetailViewController: DetailViewControllerInterface {
